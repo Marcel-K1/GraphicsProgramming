@@ -1,0 +1,6 @@
+﻿  AppWindow.cpp
+  Main.cpp
+  Window.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\DirectXEngine\Window.cpp(53,32): warning C4390: ';': empty controlled statement found; is this the intent?
+  Generating Code...
+  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\Debug\DirectXEngine.exe

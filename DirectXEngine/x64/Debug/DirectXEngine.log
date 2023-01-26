@@ -1,0 +1,6 @@
+﻿  Window.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\DirectXEngine\Window.cpp(67,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\DirectXEngine\Window.cpp(68,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\DirectXEngine\Window.cpp(69,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\DirectXEngine\Window.cpp(70,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\x64\Debug\DirectXEngine.exe

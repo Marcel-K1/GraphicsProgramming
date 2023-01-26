@@ -1,0 +1,8 @@
+﻿  Window.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\DirectXEngine\Window.cpp(53,32): warning C4390: ';': empty controlled statement found; is this the intent?
+  Generating code
+  0 of 14 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\x64\Release\DirectXEngine.exe
