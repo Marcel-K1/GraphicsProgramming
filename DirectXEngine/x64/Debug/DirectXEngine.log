@@ -1,6 +1,7 @@
 ﻿  AppWindow.cpp
   GraphicsEngine.cpp
   main.cpp
+  SwapChain.cpp
   Window.cpp
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(66,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(67,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion

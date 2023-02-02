@@ -18,6 +18,9 @@ public:
 
 	bool IsRun();
 
+	RECT GetClientWindowRect();
+	void SetHWND(HWND hwnd);
+
 	//EVENTS
 	virtual void onCreate();
 	virtual void onUpdate();
@@ -25,8 +28,8 @@ public:
 
 	~Window();
 
-private:
-	HWND m_hwnd;
-	bool m_is_run;
+protected:
+	HWND hwnd;
+	bool isRun;
 };
 

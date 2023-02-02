@@ -1,4 +1,5 @@
 #include "GraphicsEngine.h"
+#include "SwapChain.h"
 
 
 GraphicsEngine::GraphicsEngine()
@@ -27,7 +28,7 @@ bool GraphicsEngine::Init()
 	for (UINT driver_type_index = 0; driver_type_index < num_driver_types;)
 	{
 		res = D3D11CreateDevice(NULL, driver_types[driver_type_index], NULL, NULL, feature_levels,
-			num_feature_levels, D3D11_SDK_VERSION, &m_d3d_device, &m_feature_level, &m_imm_context);
+			num_feature_levels, D3D11_SDK_VERSION, &d3dDevice, &featureLevel, &immContext);
 		if (SUCCEEDED(res))
 			break;
 		++driver_type_index;
@@ -38,19 +39,32 @@ bool GraphicsEngine::Init()
 		return false;
 	}
 
+	d3dDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
+	dxgiDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&dxgiAdapter);
+	dxgiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory);
+
 	return true;
 }
 
 
 bool GraphicsEngine::Release()
 {
-	m_imm_context->Release();
-	m_d3d_device->Release();
+	dxgiDevice->Release();
+	dxgiAdapter->Release();
+	dxgiFactory->Release();
+
+	immContext->Release();
+	dxgiDevice->Release();
 	return true;
 }
 
 GraphicsEngine::~GraphicsEngine()
 {
+}
+
+SwapChain* GraphicsEngine::CreateSwapChain()
+{
+	return new SwapChain();
 }
 
 
