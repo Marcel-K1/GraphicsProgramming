@@ -1,5 +1,10 @@
 ﻿  AppWindow.cpp
   GraphicsEngine.cpp
   main.cpp
+  Window.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(66,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(67,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(68,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(69,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
   Generating Code...
-  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\x64\Debug\DirectXEngine.exe
+  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\x64\Debug\DirectXEngine.exe
