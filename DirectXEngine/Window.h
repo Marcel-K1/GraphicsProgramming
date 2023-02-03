@@ -2,20 +2,18 @@
 #include <Windows.h>
 
 
+
 class Window
 {
-
 public:
 	Window();
 
 	//Initialize the window
 	bool Init(UINT width, UINT height);
-
 	bool Broadcast();
 
 	//Release the window
 	bool Release();
-
 	bool IsRun();
 
 	RECT GetClientWindowRect();
@@ -29,7 +27,8 @@ public:
 	~Window();
 
 protected:
-	HWND hwnd;
-	bool isRun;
+	HWND m_hwnd;
+
+	bool m_is_run;
 };
 

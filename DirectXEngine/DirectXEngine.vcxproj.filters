@@ -16,6 +16,12 @@
     <Filter Include="GameEngine\GraphicsEngine\SwapChain">
       <UniqueIdentifier>{7bb70838-c914-44fe-b1d2-e92fae49f932}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\DeviceContext">
+      <UniqueIdentifier>{85c5c77a-61cc-4d0c-86ee-7f007df6817d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\VertexBuffer">
+      <UniqueIdentifier>{6f6232a8-5cb5-4433-9c4f-b20dd752ad71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,6 +39,12 @@
     <ClCompile Include="SwapChain.cpp">
       <Filter>GameEngine\GraphicsEngine\SwapChain</Filter>
     </ClCompile>
+    <ClCompile Include="DeviceContext.cpp">
+      <Filter>GameEngine\GraphicsEngine\DeviceContext</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppWindow.h">
@@ -46,6 +58,12 @@
     </ClInclude>
     <ClInclude Include="SwapChain.h">
       <Filter>GameEngine\GraphicsEngine\SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceContext.h">
+      <Filter>GameEngine\GraphicsEngine\DeviceContext</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

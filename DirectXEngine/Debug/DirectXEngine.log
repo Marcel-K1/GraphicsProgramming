@@ -1,6 +1,13 @@
 ﻿  AppWindow.cpp
-  Main.cpp
+  DeviceContext.cpp
+  GraphicsEngine.cpp
+  main.cpp
+  SwapChain.cpp
   Window.cpp
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\DirectXEngine\Window.cpp(53,32): warning C4390: ';': empty controlled statement found; is this the intent?
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(66,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(67,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(68,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(69,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
   Generating Code...
-  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming\Abgabe\DirectXEngine\Debug\DirectXEngine.exe
+GraphicsEngine.obj : error LNK2019: unresolved external symbol _D3D11CreateDevice@40 referenced in function "public: bool __thiscall GraphicsEngine::Init(void)" (?Init@GraphicsEngine@@QAE_NXZ)
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\Debug\DirectXEngine.exe : fatal error LNK1120: 1 unresolved externals
