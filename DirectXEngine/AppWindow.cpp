@@ -32,8 +32,9 @@ void AppWindow::onCreate()
 	{
 		//X - Y - Z
 		{-0.5f,-0.5f,0.0f}, // POS1
-		{0.0f,0.5f,0.0f}, // POS2
-		{ 0.5f,-0.5f,0.0f}
+		{-0.5f,0.5f,0.0f}, // POS2
+		{ 0.5f,-0.5f,0.0f },// POS2
+		{ 0.5f,0.5f,0.0f}
 	};
 
 	m_vb = GraphicsEngine::Get()->CreateVertexBuffer();
@@ -42,11 +43,13 @@ void AppWindow::onCreate()
 	GraphicsEngine::Get()->CreateShaders();
 
 	void* shader_byte_code = nullptr;
-	UINT size_shader = 0;
-	GraphicsEngine::Get()->GetShaderBufferAndSize(&shader_byte_code, &size_shader);
+	size_t size_shader = 0;
+	GraphicsEngine::Get()->CompileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 
+	m_vs = GraphicsEngine::Get()->CreateVertexShader(shader_byte_code, size_shader);
 	m_vb->Load(list, sizeof(vertex), size_list, shader_byte_code, size_shader);
 
+	GraphicsEngine::Get()->ReleaseCompiledShader();
 
 }
 
@@ -59,13 +62,16 @@ void AppWindow::onUpdate()
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->GetClientWindowRect();
 	GraphicsEngine::Get()->GetImmediateDeviceContext()->SetViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	GraphicsEngine::Get()->SetShaders();
+	GraphicsEngine::Get()->GetImmediateDeviceContext()->SetVertexShader(m_vs);
+
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
 	GraphicsEngine::Get()->GetImmediateDeviceContext()->SetVertexBuffer(m_vb);
 
 	// FINALLY DRAW THE TRIANGLE
-	GraphicsEngine::Get()->GetImmediateDeviceContext()->DrawTriangleList(m_vb->GetSizeVertexList(), 0);
+	GraphicsEngine::Get()->GetImmediateDeviceContext()->DrawTriangleStrip(m_vb->GetSizeVertexList(), 0);
 	m_swap_chain->Present(true);
 }
 
