@@ -1,4 +1,2 @@
-﻿  GraphicsEngine.cpp
-  VertexShader.cpp
-  Generating Code...
-  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\x64\Debug\DirectXEngine.exe
+﻿  AppWindow.cpp
+  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\x64\Debug\DirectXEngine.exe
