@@ -6,6 +6,8 @@
 
 class SwapChain;
 class VertexBuffer;
+class IndexBuffer;
+class ConstantBuffer;
 class VertexShader;
 class PixelShader;
 
@@ -18,7 +20,11 @@ public:
 
 	void SetVertexBuffer(VertexBuffer* vertex_buffer);
 
+	void SetIndexBuffer(IndexBuffer* index_buffer);
+
 	void DrawTriangleList(UINT vertex_count, UINT start_vertex_index);
+
+	void DrawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location);
 
 	void DrawTriangleStrip(UINT vertex_count, UINT start_vertex_index);
 
@@ -28,10 +34,17 @@ public:
 
 	void SetPixelShader(PixelShader* pixel_shader);
 
+	void SetConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer);
+
+	void SetConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer);
+
 	bool Release();
 
 	~DeviceContext();
 
 private:
 	ID3D11DeviceContext* m_device_context;
+
+private:
+	friend class ConstantBuffer;
 };

@@ -2,6 +2,8 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 
@@ -89,6 +91,16 @@ DeviceContext* GraphicsEngine::GetImmediateDeviceContext()
 VertexBuffer* GraphicsEngine::CreateVertexBuffer()
 {
 	return new VertexBuffer();
+}
+
+IndexBuffer* GraphicsEngine::CreateIndexBuffer()
+{
+	return new IndexBuffer();
+}
+
+ConstantBuffer* GraphicsEngine::CreateConstantBuffer()
+{
+	return new ConstantBuffer();
 }
 
 VertexShader* GraphicsEngine::CreateVertexShader(const void* shader_byte_code, size_t byte_code_size)
