@@ -7,11 +7,11 @@ class DeviceContext
 public:
 	DeviceContext(ID3D11DeviceContext* device_context, RenderSystem* system);
 
-	void ClearRenderTargetColor(SwapChain* swap_chain, float red, float green, float blue, float alpha);
+	void ClearRenderTargetColor(SwapChainPtr swap_chain, float red, float green, float blue, float alpha);
 
-	void SetVertexBuffer(VertexBuffer* vertex_buffer);
+	void SetVertexBuffer(VertexBufferPtr vertex_buffer);
 
-	void SetIndexBuffer(IndexBuffer* index_buffer);
+	void SetIndexBuffer(IndexBufferPtr index_buffer);
 
 	void DrawTriangleList(UINT vertex_count, UINT start_vertex_index);
 
@@ -21,13 +21,13 @@ public:
 
 	void SetViewportSize(UINT width, UINT height);
 
-	void SetVertexShader(VertexShader* vertex_shader);
+	void SetVertexShader(VertexShaderPtr vertex_shader);
 
-	void SetPixelShader(PixelShader* pixel_shader);
+	void SetPixelShader(PixelShaderPtr pixel_shader);
 
-	void SetConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer);
+	void SetConstantBuffer(VertexShaderPtr vertex_shader, ConstantBufferPtr buffer);
 
-	void SetConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer);
+	void SetConstantBuffer(PixelShaderPtr pixel_shader, ConstantBufferPtr buffer);
 
 	~DeviceContext();
 

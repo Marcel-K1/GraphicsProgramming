@@ -1,14 +1,16 @@
 #include "InputSystem.h"
 #include <Windows.h>
 
+InputSystem* InputSystem::m_system = nullptr;
 
+//As Singleton
 InputSystem::InputSystem()
 {
 }
 
-
 InputSystem::~InputSystem()
 {
+	InputSystem::m_system = nullptr;
 }
 
 void InputSystem::Update()
@@ -115,6 +117,17 @@ void InputSystem::ShowCursor(bool show)
 
 InputSystem* InputSystem::Get()
 {
-	static InputSystem system;
-	return &system;
+	return m_system;
+}
+
+void InputSystem::Create()
+{
+	if (InputSystem::m_system) throw std::exception("InputSystem already created");
+	InputSystem::m_system = new InputSystem();
+}
+
+void InputSystem::Release()
+{
+	if (!InputSystem::m_system) return;
+	delete InputSystem::m_system;
 }

@@ -21,7 +21,7 @@ struct constant
 	unsigned int m_time;
 };
 
-AppWindow::AppWindow()
+AppWindow::AppWindow(UINT width, UINT height) : Window(width, height)
 {
 }
 
@@ -147,8 +147,6 @@ void AppWindow::onCreate()
 	InputSystem::Get()->AddListener(this);
 
 	InputSystem::Get()->ShowCursor(false);
-
-	GraphicsEngine::Get()->Init();
 
 	RECT rc = this->GetClientWindowRect();
 	m_swap_chain = GraphicsEngine::Get()->GetRenderSystem()->CreateSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
@@ -281,7 +279,6 @@ void AppWindow::onUpdate()
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
-	GraphicsEngine::Get()->Release();
 }
 
 //Input Event Methods

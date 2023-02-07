@@ -15,7 +15,7 @@
 class AppWindow : public Window, public InputListener
 {
 public:
-	AppWindow();
+	AppWindow(UINT width, UINT height);
 
 	void Update();
 
@@ -40,17 +40,17 @@ public:
 	virtual void onRightMouseUp(const Point& mouse_pos) override;
 
 private:
-	SwapChain* m_swap_chain;
+	SwapChainPtr m_swap_chain;
 
-	VertexBuffer* m_vb;
+	VertexBufferPtr m_vb;
 
-	VertexShader* m_vs;
+	VertexShaderPtr m_vs;
 
-	PixelShader* m_ps;
+	PixelShaderPtr m_ps;
 
-	ConstantBuffer* m_cb;
+	ConstantBufferPtr m_cb;
 
-	IndexBuffer* m_ib;
+	IndexBufferPtr m_ib;
 
 private:
 	long m_old_delta;

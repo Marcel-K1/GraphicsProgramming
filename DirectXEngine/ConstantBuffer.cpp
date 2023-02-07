@@ -22,7 +22,7 @@ ConstantBuffer::ConstantBuffer(void* buffer, UINT size_buffer, RenderSystem* sys
 }
 
 
-void ConstantBuffer::Update(DeviceContext* context, void* buffer)
+void ConstantBuffer::Update(DeviceContextPtr context, void* buffer)
 {
 	context->m_device_context->UpdateSubresource(this->m_buffer, NULL, NULL, buffer, NULL, NULL);
 }

@@ -3,25 +3,18 @@
 #include "DeviceContext.h"
 #include "GraphicsEngine.h"
 #include "RenderSystem.h"
+#include <exception>
 
-#include <d3dcompiler.h>
+GraphicsEngine* GraphicsEngine::m_engine = nullptr;
 
+//As Singleton
 GraphicsEngine::GraphicsEngine()
 {
-}
-
-bool GraphicsEngine::Init()
-{
-	m_render_system = new RenderSystem();
-	m_render_system->Init();
-	return true;
-}
-
-bool GraphicsEngine::Release()
-{
-	m_render_system->Release();
-	delete m_render_system;
-	return true;
+	try
+	{
+		m_render_system = new RenderSystem();
+	}
+	catch (...) { throw std::exception("GraphicsEngine not created successfully"); }
 }
 
 RenderSystem* GraphicsEngine::GetRenderSystem()
@@ -31,10 +24,23 @@ RenderSystem* GraphicsEngine::GetRenderSystem()
 
 GraphicsEngine::~GraphicsEngine()
 {
+	GraphicsEngine::m_engine = nullptr;
+	delete m_render_system;
+}
+
+void GraphicsEngine::Create()
+{
+	if (GraphicsEngine::m_engine) throw std::exception("GraphicsEngine already created");
+	GraphicsEngine::m_engine = new GraphicsEngine();
+}
+
+void GraphicsEngine::Release()
+{
+	if (!GraphicsEngine::m_engine) return;
+	delete GraphicsEngine::m_engine;
 }
 
 GraphicsEngine* GraphicsEngine::Get()
 {
-	static GraphicsEngine engine;
-	return &engine;
+	return m_engine;
 }

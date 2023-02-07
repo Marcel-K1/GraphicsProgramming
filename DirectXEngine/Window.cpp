@@ -1,9 +1,5 @@
 #include "Window.h"
-
-Window::Window()
-{
-
-}
+#include <exception>
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
@@ -12,17 +8,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	case WM_CREATE:
 	{
 		//Event fired when the window is created
-		Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;
-		SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
-		window->SetHWND(hwnd);
-		window->onCreate();
 		break;
 	}
 	case WM_SETFOCUS:
 	{
 		//Event fired when the window get focus
 		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-		window->onFocus();
+		if (window) window->onFocus();
 		break;
 	}
 	case WM_KILLFOCUS:
@@ -49,7 +41,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	return NULL;
 }
 
-bool Window::Init(UINT width, UINT height)
+Window::Window(UINT width, UINT height)
 {
 	//Setting up WNDCLASSEX object
 	WNDCLASSEX wc;
@@ -62,8 +54,8 @@ bool Window::Init(UINT width, UINT height)
 	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hInstance = NULL;
 	wc.lpszClassName = L"MyWindowClass",
-	wc.lpszMenuName = L"DirectX Engine",
-	wc.style = NULL;
+		wc.lpszMenuName = L"DirectX Engine",
+		wc.style = NULL;
 	wc.lpfnWndProc = &WndProc;
 
 	UINT screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -79,7 +71,7 @@ bool Window::Init(UINT width, UINT height)
 
 	//If the registration of class will fail, the function will return false
 	if (!::RegisterClassEx(&wc))
-		return false;
+		throw std::exception("Window not created successfully");
 
 	//Creation of the window
 	m_hwnd = ::CreateWindowEx(
@@ -89,11 +81,11 @@ bool Window::Init(UINT width, UINT height)
 		WS_OVERLAPPEDWINDOW,
 		windowRect.left, windowRect.top,
 		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,
-		NULL, NULL, NULL, this);
+		NULL, NULL, NULL, NULL);
 
 	//If the creation fail return false
 	if (!m_hwnd)
-		return false;
+		throw std::exception("Window not created successfully");;
 
 	//Show up the window
 	::ShowWindow(m_hwnd, SW_SHOW);
@@ -101,13 +93,18 @@ bool Window::Init(UINT width, UINT height)
 
 	//Set this flag to true to indicate that the window is initialized and running
 	m_is_run = true;
-
-	return true;
 }
 
 bool Window::Broadcast()
 {
 	MSG msg;
+
+	if (!this->m_is_init)
+	{
+		SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
+		this->onCreate();
+		this->m_is_init = true;
+	}
 
 	this->onUpdate();
 
@@ -122,17 +119,10 @@ bool Window::Broadcast()
 	return true;
 }
 
-bool Window::Release()
-{
-	//Destroy the window
-	if (!::DestroyWindow(m_hwnd))
-		return false;
-
-	return true;
-}
-
 bool Window::IsRun()
 {
+	if (m_is_run)
+		Broadcast();
 	return m_is_run;
 }
 
@@ -141,11 +131,6 @@ RECT Window::GetClientWindowRect()
 	RECT rc;
 	::GetClientRect(this->m_hwnd, &rc);
 	return rc;
-}
-
-void Window::SetHWND(HWND hwnd)
-{
-	this->m_hwnd = hwnd;
 }
 
 void Window::onCreate()

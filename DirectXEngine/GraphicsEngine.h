@@ -3,18 +3,14 @@
 #include "Prerequisites.h"
 #include "RenderSystem.h"
 
+//As Singleton
 class GraphicsEngine
 {
-public:
-
+private:
+	//Initialize the GraphicsEngine and DirectX 11 Device
 	GraphicsEngine();
 
-	//Initialize the GraphicsEngine and DirectX 11 Device
-	bool Init();
-
 	//Release all the resources loaded
-	bool Release();
-
 	~GraphicsEngine();
 
 public:
@@ -23,6 +19,12 @@ public:
 public:
 	static GraphicsEngine* Get();
 
+	static void Create();
+
+	static void Release();
+
 private:
 	RenderSystem* m_render_system = nullptr;
+
+	static GraphicsEngine* m_engine;
 };
