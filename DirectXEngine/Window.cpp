@@ -121,8 +121,10 @@ bool Window::Broadcast()
 
 bool Window::IsRun()
 {
-	if (m_is_run)
+	if (m_is_run) 
+	{
 		Broadcast();
+	}
 	return m_is_run;
 }
 

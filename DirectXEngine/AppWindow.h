@@ -52,6 +52,10 @@ private:
 
 	IndexBufferPtr m_ib;
 
+	TexturePtr m_wood_tex;
+
+	MeshPtr m_mesh;
+
 private:
 	long m_old_delta;
 	long m_new_delta;

@@ -1,19 +1,17 @@
-﻿  main.cpp
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(38,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(39,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(40,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(41,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(46,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(47,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(48,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(49,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(54,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(55,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(56,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(57,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  AppWindow.cpp
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(146,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\AppWindow.cpp(34,30): warning C4244: '=': conversion from 'ULONGLONG' to 'unsigned int', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\AppWindow.cpp(424,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
+  DeviceContext.cpp
+  RenderSystem.cpp
+  SwapChain.cpp
+  main.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\x64\Debug\DirectXEngine.exe

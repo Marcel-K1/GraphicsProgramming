@@ -1,3 +1,4 @@
+#include "RenderSystem.h"
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
@@ -5,7 +6,6 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
-#include "RenderSystem.h"
 
 #include <d3dcompiler.h>
 #include <exception>
@@ -79,7 +79,7 @@ DeviceContextPtr RenderSystem::GetImmediateDeviceContext()
 	return this->m_imm_device_context;
 }
 
-VertexBufferPtr RenderSystem::CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
+VertexBufferPtr RenderSystem::CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void*shader_byte_code, UINT size_byte_shader)
 {
 
 	VertexBufferPtr vb = nullptr;
@@ -96,7 +96,7 @@ IndexBufferPtr RenderSystem::CreateIndexBuffer(void* list_indices, UINT size_lis
 	IndexBufferPtr ib = nullptr;
 	try
 	{
-		ib = std::make_shared <IndexBuffer>(list_indices, size_list, this);
+		ib = std::make_shared<IndexBuffer>(list_indices, size_list, this);
 	}
 	catch (...) {}
 	return ib;
@@ -107,29 +107,29 @@ ConstantBufferPtr RenderSystem::CreateConstantBuffer(void* buffer, UINT size_buf
 	ConstantBufferPtr cb = nullptr;
 	try
 	{
-		cb = std::make_shared <ConstantBuffer>(buffer, size_buffer, this);
+		cb = std::make_shared<ConstantBuffer>(buffer, size_buffer, this);
 	}
 	catch (...) {}
 	return cb;
 }
 
-VertexShaderPtr RenderSystem::CreateVertexShader(const void* shader_byte_code, size_t byte_code_size)
+VertexShaderPtr RenderSystem::CreateVertexShader(const void * shader_byte_code, size_t byte_code_size)
 {
 	VertexShaderPtr vs = nullptr;
 	try
 	{
-		vs = std::make_shared <VertexShader>(shader_byte_code, byte_code_size, this);
+		vs = std::make_shared<VertexShader>(shader_byte_code, byte_code_size, this);
 	}
 	catch (...) {}
 	return vs;
 }
 
-PixelShaderPtr RenderSystem::CreatePixelShader(const void* shader_byte_code, size_t byte_code_size)
+PixelShaderPtr RenderSystem::CreatePixelShader(const void * shader_byte_code, size_t byte_code_size)
 {
 	PixelShaderPtr ps = nullptr;
 	try
 	{
-		ps = std::make_shared <PixelShader>(shader_byte_code, byte_code_size, this);
+		ps = std::make_shared<PixelShader>(shader_byte_code, byte_code_size, this);
 	}
 	catch (...) {}
 	return ps;
