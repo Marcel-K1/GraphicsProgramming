@@ -122,6 +122,7 @@
     <FxCompile>
       <ShaderType>Effect</ShaderType>
       <EntryPointName>main</EntryPointName>
+      <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,6 +145,7 @@
     <FxCompile>
       <ShaderType>Effect</ShaderType>
       <EntryPointName>main</EntryPointName>
+      <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
