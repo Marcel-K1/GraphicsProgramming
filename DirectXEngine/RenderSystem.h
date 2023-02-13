@@ -45,6 +45,10 @@ public:
 	////DEFAULT SIMPLE SHADERS
 	//bool CreateShaders();
 	//bool SetShaders();
+	void SetRasterizerState(bool cull_front);
+
+private:
+	void InitRasterizerState();
 
 private:
 	DeviceContextPtr m_imm_device_context;
@@ -65,6 +69,9 @@ private:
 
 private:
 	ID3DBlob* m_blob = nullptr;
+
+	ID3D11RasterizerState* m_cull_front_state = nullptr;
+	ID3D11RasterizerState* m_cull_back_state = nullptr;
 
 	ID3DBlob* m_vsblob = nullptr;
 

@@ -18,6 +18,7 @@ SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) :
 	desc.OutputWindow = hwnd;
 	desc.SampleDesc.Count = 1;
 	desc.SampleDesc.Quality = 0;
+	desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	desc.Windowed = TRUE;
 
 	//Create the swap chain for the window indicated by HWND parameter
@@ -28,10 +29,46 @@ SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) :
 		throw std::exception("SwapChain not created successfully");
 	}
 
+	ReloadBuffers(width, height);
+}
+	
+void SwapChain::SetFullScreen(bool fullscreen, unsigned int width, unsigned int height)
+{
+	Resize(width, height);
+	m_swap_chain->SetFullscreenState(fullscreen, nullptr);
+}
+	
+void SwapChain::Resize(unsigned int width, unsigned int height)
+{
+	if (m_rtv) m_rtv->Release();
+	if (m_dsv) m_dsv->Release();
+	
+	m_swap_chain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+	ReloadBuffers(width, height);
+}
+
+bool SwapChain::Present(bool vsync)
+{
+	m_swap_chain->Present(vsync, NULL);
+
+	return true;
+}
+
+SwapChain::~SwapChain()
+{
+	m_dsv->Release();
+	m_rtv->Release();
+	m_swap_chain->Release();
+}
+
+void SwapChain::ReloadBuffers(unsigned int width, unsigned int height)
+{
+	ID3D11Device* device = m_system->m_d3d_device;
+
 	//Get the back buffer color and create its render target view
 	//--------------------------------
 	ID3D11Texture2D* buffer = NULL;
-	hr = m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
+	HRESULT hr = m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
 
 	if (FAILED(hr))
 	{
@@ -59,6 +96,7 @@ SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) :
 	tex_desc.ArraySize = 1;
 	tex_desc.CPUAccessFlags = 0;
 
+
 	hr = device->CreateTexture2D(&tex_desc, nullptr, &buffer);
 
 	if (FAILED(hr))
@@ -76,16 +114,3 @@ SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) :
 	}
 }
 
-bool SwapChain::Present(bool vsync)
-{
-	m_swap_chain->Present(vsync, NULL);
-
-	return true;
-}
-
-SwapChain::~SwapChain()
-{
-	m_dsv->Release();
-	m_rtv->Release();
-	m_swap_chain->Release();
-}

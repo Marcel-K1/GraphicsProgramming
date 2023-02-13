@@ -30,91 +30,64 @@ AppWindow::AppWindow(UINT width, UINT height) : Window(width, height)
 {
 }
 
+void AppWindow::Render()
+{
+	//CLEAR THE RENDER TARGET 
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->ClearRenderTargetColor(this->m_swap_chain,
+		0, 0.3f, 0.4f, 1);
+
+	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW & SET CONSTANT BUFFER
+	RECT rc = this->GetClientWindowRect();
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+
+	//COMPUTE TRANSFORM MATRICES
+	Update();
+
+	//RENDER MODEL
+	GraphicsEngine::Get()->GetRenderSystem()->SetRasterizerState(false);
+	DrawMesh(m_mesh, m_vs, m_ps, m_cb, m_wood_tex);
+
+	//RENDER SKYBOX/SPHERE
+	GraphicsEngine::Get()->GetRenderSystem()->SetRasterizerState(true);
+	DrawMesh(m_sky_mesh, m_vs, m_sky_ps, m_sky_cb, m_sky_tex);
+
+	m_swap_chain->Present(true);
+
+	m_old_delta = m_new_delta;
+	m_new_delta = ::GetTickCount64();
+
+	m_delta_time = (m_old_delta) ? ((m_new_delta - m_old_delta) / 1000.0f) : 0;
+}
+
 void AppWindow::Update()
 {
+	UpdateCamera();
+	UpdateModel();
+	UpdateSkyBox();
+}
+
+void AppWindow::UpdateModel()
+{
 	constant cc;
-	//cc.m_time = ::GetTickCount64();
-	m_delta_pos += m_delta_time / 10.0f;
-	if (m_delta_pos > 1.0f)
-		m_delta_pos = 0;
 
-	Matrix4x4 temp;
-
-	////For just changing Position of static quad
-	// 
-	//cc.m_world.SetTranslation(Vector3D(0, 0.5f, 0));
-
-
-
-	////For just changing Scale of static quad
-	// 
-	//cc.m_world.SetScale(Vector3D(1.5f, 1.5f, 1.5f));
-
-
-
-	////For changing Position and Scale dynamically over time
-	// 
-	//Matrix4x4 temp;
-	// 
-	//m_delta_scale += m_delta_time / 0.15f;
-	//cc.m_world.SetScale(Vector3D::Lerp(Vector3D(0.5, 0.5, 0), Vector3D(1.0f, 1.0f, 0), (sin(m_delta_scale) + 1.0f) / 2.0f));
-	//temp.SetTranslation(Vector3D::Lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_delta_pos));
-	////Multiplying the Scale Matrix with the Transformation Matrix 
-	// (by using the overriden operator function in the header) to set up the World Matrix:
-	//cc.m_world *= temp;
-
-
-
-	////For changing Cube Rotation:
-	// 
-	//m_delta_pos += m_delta_time / 10.0f;
-	//if (m_delta_pos > 1.0f)
-	//	m_delta_pos = 0;
-
-	//Matrix4x4 temp;
-
-	//m_delta_scale += m_delta_time / 0.55f;
-
-	//cc.m_world.SetScale(Vector3D(m_scale_cube, m_scale_cube, m_scale_cube));
-
-	//temp.SetIdentity();
-	//temp.SetRotationZ(/*m_delta_scale*/0.0f);
-	//cc.m_world *= temp;
-
-	//temp.SetIdentity();
-	//temp.SetRotationY(m_rot_y);
-	//cc.m_world *= temp;
-
-	//temp.SetIdentity();
-	//temp.SetRotationX(m_rot_x);
-	//cc.m_world *= temp;
-
-	//cc.m_view.SetIdentity();
-	//cc.m_proj.SetOrthoLH
-	//(
-	//	(this->GetClientWindowRect().right - this->GetClientWindowRect().left) / 300.0f,
-	//	(this->GetClientWindowRect().bottom - this->GetClientWindowRect().top) / 300.0f,
-	//	-4.0f,
-	//	4.0f
-	//);
-
-
-
-	////For changing camera Position:
-	// 
-	// 
-	//Light
 	Matrix4x4 m_light_rot_matrix;
 	m_light_rot_matrix.SetIdentity();
 	m_light_rot_matrix.SetRotationY(m_light_rot_y);
-	m_light_rot_y += 0.707f * m_delta_time;
-	cc.m_light_direction = m_light_rot_matrix.GetZDirection();
 
-	m_delta_scale += m_delta_time / 0.55f;
+	m_light_rot_y += 0.707f * m_delta_time;
 
 	cc.m_world.SetIdentity();
+	cc.m_view = m_view_cam;
+	cc.m_proj = m_proj_cam;
+	cc.m_camera_position = m_world_cam.GetTranslation();
+	cc.m_light_direction = m_light_rot_matrix.GetZDirection();
 
-	Matrix4x4 world_cam;
+	m_cb->Update(GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext(), &cc);
+}
+
+void AppWindow::UpdateCamera()
+{
+	Matrix4x4 world_cam, temp;
 	world_cam.SetIdentity();
 
 	temp.SetIdentity();
@@ -125,34 +98,63 @@ void AppWindow::Update()
 	temp.SetRotationY(m_rot_y);
 	world_cam *= temp;
 
-	Vector3D new_pos = m_world_cam.GetTranslation() + world_cam.GetZDirection()*(m_forward * 0.1f);
+	Vector3D new_pos = m_world_cam.GetTranslation() + world_cam.GetZDirection() * (m_forward * 0.05f);
 
-	new_pos = new_pos + world_cam.GetXDirection()*(m_rightward * 0.01f);
+	new_pos = new_pos + world_cam.GetXDirection() * (m_rightward * 0.05f);
 
 	world_cam.SetTranslation(new_pos);
-
-	cc.m_camera_position = new_pos;
 
 	m_world_cam = world_cam;
 
 	world_cam.Inverse();
 
-	cc.m_view = world_cam;
+	m_view_cam = world_cam;
 
 	int width = (this->GetClientWindowRect().right - this->GetClientWindowRect().left);
 	int height = (this->GetClientWindowRect().bottom - this->GetClientWindowRect().top);
 
-	cc.m_proj.SetPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
+	m_proj_cam.SetPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
+}
 
+void AppWindow::UpdateSkyBox()
+{
+	constant cc;
 
+	cc.m_world.SetIdentity();
+	cc.m_world.SetScale(Vector3D(100.0f, 100.0f, 100.0f));
+	cc.m_world.SetTranslation(m_world_cam.GetTranslation());
+	cc.m_view = m_view_cam;
+	cc.m_proj = m_proj_cam;
 
-	m_cb->Update(GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext(), &cc);
+	m_sky_cb->Update(GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext(), &cc);
+}
+
+void AppWindow::DrawMesh(const MeshPtr& mesh, const VertexShaderPtr& vs, const PixelShaderPtr& ps, const ConstantBufferPtr& cb, const TexturePtr& tex)
+{
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(vs, cb);
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(ps, cb);
+											  							   
+	//SET DEFAULT SHADER IN THE GRAPHICS PIPELENE TO BE ABLE TO DRAW	   
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexShader(vs);
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetPixelShader(ps);
+											  							   
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(ps, tex);
+											  							   
+	//SET THE VERTICES OF THE TRIANGLE TO DRAW							   
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexBuffer(mesh->GetVertexBuffer());
+
+	//SET THE INDICES OF THE TRIANGLE TO DRAW 							   
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetIndexBuffer(mesh->GetIndexBuffer());
+											  							   
+	//FINALLY DRAW THE TRIANGLE			  							   
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->DrawIndexedTriangleList(mesh->GetIndexBuffer()->GetSizeIndexList(), 0, 0);
 }
 
 AppWindow::~AppWindow()
 {
 }
 
+//Events
 void AppWindow::onCreate()
 {
 //----------------------------------------------------------------------------------------------------------------------------------
@@ -163,24 +165,26 @@ void AppWindow::onCreate()
 
 	InputSystem::Get()->AddListener(this);
 
+	m_play_state = true;
 	InputSystem::Get()->ShowCursor(false);
 
-	//For making wooden cube
-	//m_wood_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\wood.jpg");
-
-	//For making brick teapot
+	//Texture Generation
 	m_wood_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\brick.png");
-	m_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\statue.obj");
+	m_sky_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\sky.jpg");
+
+	//Mesh Generation
+	m_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\suzanne.obj");
+	m_sky_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\sphere.obj");
 
 	RECT rc = this->GetClientWindowRect();
-
 	m_swap_chain = GraphicsEngine::Get()->GetRenderSystem()->CreateSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	m_world_cam.SetTranslation(Vector3D(0, 0, -1));
+	m_world_cam.SetTranslation(Vector3D(0, 0, -3));
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
+	//Shader Compilation
 	GraphicsEngine::Get()->GetRenderSystem()->CompileVertexShader(L"VertexShader.hlsl", "main", &shader_byte_code, &size_shader);
 	m_vs = GraphicsEngine::Get()->GetRenderSystem()->CreateVertexShader(shader_byte_code, size_shader);
 	GraphicsEngine::Get()->GetRenderSystem()->ReleaseCompiledShader();
@@ -189,13 +193,20 @@ void AppWindow::onCreate()
 	m_ps = GraphicsEngine::Get()->GetRenderSystem()->CreatePixelShader(shader_byte_code, size_shader);
 	GraphicsEngine::Get()->GetRenderSystem()->ReleaseCompiledShader();
 
+	GraphicsEngine::Get()->GetRenderSystem()->CompilePixelShader(L"SkyBoxShader.hlsl", "main", &shader_byte_code, &size_shader);
+	m_sky_ps = GraphicsEngine::Get()->GetRenderSystem()->CreatePixelShader(shader_byte_code, size_shader);
+	GraphicsEngine::Get()->GetRenderSystem()->ReleaseCompiledShader();
+
 	constant cc;
 	//cc.m_time = 0;
 
 	m_cb = GraphicsEngine::Get()->GetRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant));
+	m_sky_cb = GraphicsEngine::Get()->GetRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant));
 
+#pragma region Mesh Generation by Code
 //----------------------------------------------------------------------------------------------------------------------------------
-	//For Quad Generation:
+	
+	//For Creating Mesh:
 
 	//Window::onCreate();
 
@@ -374,76 +385,24 @@ void AppWindow::onCreate()
 	//cc.m_time = 0;
 
 	//m_cb = GraphicsEngine::Get()->GetRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant));
+#pragma endregion
 
 }
 
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
-
 	InputSystem::Get()->Update();
-
-	//CLEAR THE RENDER TARGET 
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->ClearRenderTargetColor(this->m_swap_chain,
-		0, 0.3f, 0.4f, 1);
-
-	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW & SET CONSTANT BUFFER
-	RECT rc = this->GetClientWindowRect();
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetViewportSize(rc.right - rc.left, rc.bottom - rc.top);
-
-	Update();
-
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(m_vs, m_cb);
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(m_ps, m_cb);
-
-	//SET VERTEX- & PIXEL-SHADERS IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexShader(m_vs);
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetPixelShader(m_ps);
-
-	//SET TEXTURES
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(m_ps, m_wood_tex);
-
-	////SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	//GraphicsEngine::Get()->SetShaders();
-	//GraphicsEngine::Get()->GetImmediateDeviceContext()->SetVertexShader(m_vs);
-
-	//TO DRAW A TEAPOT
-	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexBuffer(m_mesh->GetVertexBuffer());
-	//SET THE INDICES OF THE TRIANGLE TO DRAW
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetIndexBuffer(m_mesh->GetIndexBuffer());
-
-	////TO DRAW A CUBE
-	////SET THE VERTICES OF THE TRIANGLE TO DRAW
-	//GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexBuffer(m_vb);
-	////SET THE INDICES OF THE TRIANGLE TO DRAW
-	//GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetIndexBuffer(m_ib);
-
-	////DRAW THE TRIANGLE WITH TRIANGLE STRIP  FOR QUAD
-	//GraphicsEngine::Get()->GetImmediateDeviceContext()->DrawTriangleStrip(m_vb->GetSizeVertexList(), 0);
-	
-	//DRAW THE TRIANGLE FOR TEAPOT
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->DrawIndexedTriangleList(m_mesh->GetIndexBuffer()->GetSizeIndexList(), 0, 0);
-
-	////DRAW THE TRIANGLE WITH INDEXED TRIANGLE LIST FOR CUBE
-	//GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->DrawIndexedTriangleList(m_ib->GetSizeIndexList(), 0, 0);
-
-	m_swap_chain->Present(true);
-
-	m_old_delta = m_new_delta;
-	m_new_delta = ::GetTickCount64();
-
-	m_delta_time = (m_old_delta) ? ((m_new_delta - m_old_delta) / 1000.0f) : 0;
+	this->Render();
 }
 
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
+	m_swap_chain->SetFullScreen(false, 1, 1);
 }
 
 //Input Event Methods
-
-//Handling the Window Focus
 void AppWindow::onFocus()
 {
 	InputSystem::Get()->AddListener(this);
@@ -454,8 +413,17 @@ void AppWindow::onKillFocus()
 	InputSystem::Get()->RemoveListener(this);
 }
 
+void AppWindow::onSize()
+{
+	RECT rc = this->GetClientWindowRect();
+	m_swap_chain->Resize(rc.right, rc.bottom);
+	this->Render();
+}
+
 void AppWindow::onKeyDown(int key)
 {
+	if (!m_play_state) return;
+
 	if (key == 'W')
 	{
 		/*m_rot_x += 3.14f * m_delta_time;*/
@@ -486,10 +454,25 @@ void AppWindow::onKeyUp(int key)
 {
 	m_forward = 0.0f;
 	m_rightward = 0.0f;
+
+	if (key == 'G')
+	{
+		m_play_state = (m_play_state) ? false : true;
+		InputSystem::Get()->ShowCursor(!m_play_state);
+	}
+	else if (key == 'F')
+	{
+		m_fullscreen_state = (m_fullscreen_state) ? false : true;
+		RECT size_screen = this->GetSizeScreen();
+
+		m_swap_chain->SetFullScreen(m_fullscreen_state, size_screen.right, size_screen.bottom);
+	}
 }
 
 void AppWindow::onMouseMove(const Point & mouse_pos)
 {
+	if (!m_play_state) return;
+
 	//m_rot_x += delta_mouse_pos.m_y * m_delta_time * 0.01f;
 	//m_rot_y += delta_mouse_pos.m_x * m_delta_time * 0.01f;
 
@@ -521,3 +504,186 @@ void AppWindow::onRightMouseUp(const Point& mouse_pos)
 {
 	m_scale_cube = 1.0f;
 }
+
+//Depricated Code
+//Old Update
+//void AppWindow::Update()
+//{
+//	constant cc;
+//	//cc.m_time = ::GetTickCount64();
+//	m_delta_pos += m_delta_time / 10.0f;
+//	if (m_delta_pos > 1.0f)
+//		m_delta_pos = 0;
+//
+//	Matrix4x4 temp;
+//
+//
+//
+//	////For just changing Position of static quad
+//	// 
+//	//cc.m_world.SetTranslation(Vector3D(0, 0.5f, 0));
+//
+//
+//
+//	////For just changing Scale of static quad
+//	// 
+//	//cc.m_world.SetScale(Vector3D(1.5f, 1.5f, 1.5f));
+//
+//
+//
+//	////For changing Position and Scale dynamically over time
+//	// 
+//	//Matrix4x4 temp;
+//	// 
+//	//m_delta_scale += m_delta_time / 0.15f;
+//	//cc.m_world.SetScale(Vector3D::Lerp(Vector3D(0.5, 0.5, 0), Vector3D(1.0f, 1.0f, 0), (sin(m_delta_scale) + 1.0f) / 2.0f));
+//	//temp.SetTranslation(Vector3D::Lerp(Vector3D(-1.5f, -1.5f, 0), Vector3D(1.5f, 1.5f, 0), m_delta_pos));
+//	////Multiplying the Scale Matrix with the Transformation Matrix 
+//	// (by using the overriden operator function in the header) to set up the World Matrix:
+//	//cc.m_world *= temp;
+//
+//
+//
+//	////For changing Cube Rotation:
+//	// 
+//	//m_delta_pos += m_delta_time / 10.0f;
+//	//if (m_delta_pos > 1.0f)
+//	//	m_delta_pos = 0;
+//
+//	//Matrix4x4 temp;
+//
+//	//m_delta_scale += m_delta_time / 0.55f;
+//
+//	//cc.m_world.SetScale(Vector3D(m_scale_cube, m_scale_cube, m_scale_cube));
+//
+//	//temp.SetIdentity();
+//	//temp.SetRotationZ(/*m_delta_scale*/0.0f);
+//	//cc.m_world *= temp;
+//
+//	//temp.SetIdentity();
+//	//temp.SetRotationY(m_rot_y);
+//	//cc.m_world *= temp;
+//
+//	//temp.SetIdentity();
+//	//temp.SetRotationX(m_rot_x);
+//	//cc.m_world *= temp;
+//
+//	//cc.m_view.SetIdentity();
+//	//cc.m_proj.SetOrthoLH
+//	//(
+//	//	(this->GetClientWindowRect().right - this->GetClientWindowRect().left) / 300.0f,
+//	//	(this->GetClientWindowRect().bottom - this->GetClientWindowRect().top) / 300.0f,
+//	//	-4.0f,
+//	//	4.0f
+//	//);
+//
+//
+//
+//	////For changing camera Position:
+//	//// 
+//	//// 
+//	////Light
+//	//Matrix4x4 m_light_rot_matrix;
+//	//m_light_rot_matrix.SetIdentity();
+//	//m_light_rot_matrix.SetRotationY(m_light_rot_y);
+//	//m_light_rot_y += 0.707f * m_delta_time;
+//	//cc.m_light_direction = m_light_rot_matrix.GetZDirection();
+//
+//	//m_delta_scale += m_delta_time / 0.55f;
+//
+//	//cc.m_world.SetIdentity();
+//
+//	//Matrix4x4 world_cam;
+//	//world_cam.SetIdentity();
+//
+//	//temp.SetIdentity();
+//	//temp.SetRotationX(m_rot_x);
+//	//world_cam *= temp;
+//
+//	//temp.SetIdentity();
+//	//temp.SetRotationY(m_rot_y);
+//	//world_cam *= temp;
+//
+//	//Vector3D new_pos = m_world_cam.GetTranslation() + world_cam.GetZDirection()*(m_forward * 0.1f);
+//
+//	//new_pos = new_pos + world_cam.GetXDirection()*(m_rightward * 0.01f);
+//
+//	//world_cam.SetTranslation(new_pos);
+//
+//	//cc.m_camera_position = new_pos;
+//
+//	//m_world_cam = world_cam;
+//
+//	//world_cam.Inverse();
+//
+//	//cc.m_view = world_cam;
+//
+//	//int width = (this->GetClientWindowRect().right - this->GetClientWindowRect().left);
+//	//int height = (this->GetClientWindowRect().bottom - this->GetClientWindowRect().top);
+//
+//	//cc.m_proj.SetPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
+//
+//
+//
+//	//m_cb->Update(GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext(), &cc);
+//}
+
+//Old onUpdate
+//void AppWindow::onUpdate()
+//{
+//	Window::onUpdate();
+//
+//	InputSystem::Get()->Update();
+//
+//	//CLEAR THE RENDER TARGET 
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->ClearRenderTargetColor(this->m_swap_chain,
+//		0, 0.3f, 0.4f, 1);
+//
+//	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW & SET CONSTANT BUFFER
+//	RECT rc = this->GetClientWindowRect();
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+//	
+//	Update();
+//
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(m_vs, m_cb);
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(m_ps, m_cb);
+//
+//	//SET VERTEX- & PIXEL-SHADERS IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexShader(m_vs);
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetPixelShader(m_ps);
+//
+//	//SET TEXTURES
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(m_ps, m_wood_tex);
+//
+//	////SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+//	//GraphicsEngine::Get()->SetShaders();
+//	//GraphicsEngine::Get()->GetImmediateDeviceContext()->SetVertexShader(m_vs);
+//
+//	//TO DRAW A TEAPOT
+//	//SET THE VERTICES OF THE TRIANGLE TO DRAW
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexBuffer(m_mesh->GetVertexBuffer());
+//	//SET THE INDICES OF THE TRIANGLE TO DRAW
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetIndexBuffer(m_mesh->GetIndexBuffer());
+//
+//	////TO DRAW A CUBE
+//	////SET THE VERTICES OF THE TRIANGLE TO DRAW
+//	//GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexBuffer(m_vb);
+//	////SET THE INDICES OF THE TRIANGLE TO DRAW
+//	//GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetIndexBuffer(m_ib);
+//
+//	////DRAW THE TRIANGLE WITH TRIANGLE STRIP  FOR QUAD
+//	//GraphicsEngine::Get()->GetImmediateDeviceContext()->DrawTriangleStrip(m_vb->GetSizeVertexList(), 0);
+//	
+//	//DRAW THE TRIANGLE FOR TEAPOT
+//	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->DrawIndexedTriangleList(m_mesh->GetIndexBuffer()->GetSizeIndexList(), 0, 0);
+//
+//	////DRAW THE TRIANGLE WITH INDEXED TRIANGLE LIST FOR CUBE
+//	//GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->DrawIndexedTriangleList(m_ib->GetSizeIndexList(), 0, 0);
+//
+//	m_swap_chain->Present(true);
+//
+//	m_old_delta = m_new_delta;
+//	m_new_delta = ::GetTickCount64();
+//
+//	m_delta_time = (m_old_delta) ? ((m_new_delta - m_old_delta) / 1000.0f) : 0;
+//}

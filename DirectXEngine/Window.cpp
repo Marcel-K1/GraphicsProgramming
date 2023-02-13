@@ -10,6 +10,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		//Event fired when the window is created
 		break;
 	}
+	case WM_SIZE:
+	{
+		// Event fired when the window is resized
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		if (window) window->onSize();
+		break;
+	}
 	case WM_SETFOCUS:
 	{
 		//Event fired when the window get focus
@@ -54,8 +61,8 @@ Window::Window(UINT width, UINT height)
 	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hInstance = NULL;
 	wc.lpszClassName = L"MyWindowClass",
-		wc.lpszMenuName = L"DirectX Engine",
-		wc.style = NULL;
+	wc.lpszMenuName = L"DirectX Engine",
+	wc.style = NULL;
 	wc.lpfnWndProc = &WndProc;
 
 	UINT screenWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -135,6 +142,16 @@ RECT Window::GetClientWindowRect()
 	return rc;
 }
 
+RECT Window::GetSizeScreen()
+{
+	RECT rc;
+
+	rc.right = ::GetSystemMetrics(SM_CXSCREEN);
+	rc.bottom = ::GetSystemMetrics(SM_CYSCREEN);
+
+	return rc;
+}
+
 void Window::onCreate()
 {
 }
@@ -153,6 +170,10 @@ void Window::onFocus()
 }
 
 void Window::onKillFocus()
+{
+}
+
+void Window::onSize()
 {
 }
 

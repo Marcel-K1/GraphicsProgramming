@@ -8,9 +8,17 @@ public:
 	//Initialize SwapChain for a window
 	SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system);
 
+	void SetFullScreen(bool fullscreen, unsigned int width, unsigned int height);
+
+	void Resize(unsigned int width, unsigned int height);
+
 	bool Present(bool vsync);
 
+	//Release the swap chain
 	~SwapChain();
+
+private:
+	void ReloadBuffers(unsigned int width, unsigned int height);
 
 private:
 	IDXGISwapChain* m_swap_chain = nullptr;

@@ -17,8 +17,6 @@ class AppWindow : public Window, public InputListener
 public:
 	AppWindow(UINT width, UINT height);
 
-	void Update();
-
 	~AppWindow();
 
 	// Inherited via Window
@@ -27,6 +25,7 @@ public:
 	virtual void onDestroy() override;
 	virtual void onFocus() override;
 	virtual void onKillFocus() override;
+	virtual void onSize() override;
 
 	// Inherited via InputListener
 	virtual void onKeyDown(int key) override;
@@ -39,6 +38,20 @@ public:
 	virtual void onRightMouseDown(const Point& mouse_pos) override;
 	virtual void onRightMouseUp(const Point& mouse_pos) override;
 
+public:
+	void Render();
+
+	void Update();
+
+	void UpdateModel();
+
+	void UpdateCamera();
+
+	void UpdateSkyBox();
+		 
+	void DrawMesh(const MeshPtr& mesh, const VertexShaderPtr& vs, const PixelShaderPtr& ps, const ConstantBufferPtr& cb,
+		const TexturePtr& tex);
+
 private:
 	SwapChainPtr m_swap_chain;
 
@@ -48,13 +61,21 @@ private:
 
 	PixelShaderPtr m_ps;
 
+	PixelShaderPtr m_sky_ps;
+
 	ConstantBufferPtr m_cb;
+
+	ConstantBufferPtr m_sky_cb;
 
 	IndexBufferPtr m_ib;
 
 	TexturePtr m_wood_tex;
 
+	TexturePtr m_sky_tex;
+
 	MeshPtr m_mesh;
+
+	MeshPtr m_sky_mesh;
 
 private:
 	long m_old_delta;
@@ -78,7 +99,15 @@ private:
 	//Variables for changing Camera Position
 	float m_forward = 0.0f;
 	float m_rightward = 0.0f;
-	Matrix4x4 m_world_cam;
 
+	//Variables for Skybox Generation
+	bool cull = true;
+	Matrix4x4 m_world_cam;
+	Matrix4x4 m_view_cam;
+	Matrix4x4 m_proj_cam;
+
+	//Window Management
+	bool m_play_state = false;
+	bool m_fullscreen_state = false;
 };
 
