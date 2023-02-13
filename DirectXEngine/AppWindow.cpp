@@ -23,7 +23,9 @@ struct constant
 	Matrix4x4 m_proj;
 	Vector4D m_light_direction;
 	Vector4D m_camera_position;
-	//unsigned int m_time;
+	Vector4D m_light_position = Vector4D(0, 1, 0, 0);
+	float m_light_radius = 4.0f;
+	float m_time = 0.0f;
 };
 
 AppWindow::AppWindow(UINT width, UINT height) : Window(width, height)
@@ -36,20 +38,27 @@ void AppWindow::Render()
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->ClearRenderTargetColor(this->m_swap_chain,
 		0, 0.3f, 0.4f, 1);
 
+
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW & SET CONSTANT BUFFER
 	RECT rc = this->GetClientWindowRect();
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
+
 	//COMPUTE TRANSFORM MATRICES
 	Update();
 
+
 	//RENDER MODEL
 	GraphicsEngine::Get()->GetRenderSystem()->SetRasterizerState(false);
-	DrawMesh(m_mesh, m_vs, m_ps, m_cb, m_wood_tex);
+	TexturePtr list_tex[1];
+	list_tex[0] = m_brick_tex;
+	DrawMesh(m_mesh, m_vs, m_ps, m_cb, list_tex, 1);
 
 	//RENDER SKYBOX/SPHERE
 	GraphicsEngine::Get()->GetRenderSystem()->SetRasterizerState(true);
-	DrawMesh(m_sky_mesh, m_vs, m_sky_ps, m_sky_cb, m_sky_tex);
+	list_tex[0] = m_sky_tex;
+	DrawMesh(m_sky_mesh, m_vs, m_sky_ps, m_sky_cb, list_tex, 1);
+
 
 	m_swap_chain->Present(true);
 
@@ -74,13 +83,29 @@ void AppWindow::UpdateModel()
 	m_light_rot_matrix.SetIdentity();
 	m_light_rot_matrix.SetRotationY(m_light_rot_y);
 
-	m_light_rot_y += 0.707f * m_delta_time;
+	//POINT LIGHT
+	m_light_rot_y += 1.57f * m_delta_time;
 
 	cc.m_world.SetIdentity();
 	cc.m_view = m_view_cam;
 	cc.m_proj = m_proj_cam;
 	cc.m_camera_position = m_world_cam.GetTranslation();
+
+	float dist_from_origin = 1.0f;
+
+	cc.m_light_position = Vector4D(cos(m_light_rot_y) * dist_from_origin, 3.1f, sin(m_light_rot_y) * dist_from_origin, 1.0f);
+
+	cc.m_light_radius = m_light_radius;
 	cc.m_light_direction = m_light_rot_matrix.GetZDirection();
+	cc.m_time = m_time;
+
+	////DIRECTIONAL LIGHT
+	//m_light_rot_y += 0.707f * m_delta_time;
+	//cc.m_world.SetIdentity();
+	//cc.m_view = m_view_cam;
+	//cc.m_proj = m_proj_cam;
+	//cc.m_camera_position = m_world_cam.GetTranslation();
+	//cc.m_light_direction = m_light_rot_matrix.GetZDirection();
 
 	m_cb->Update(GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext(), &cc);
 }
@@ -129,7 +154,7 @@ void AppWindow::UpdateSkyBox()
 	m_sky_cb->Update(GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext(), &cc);
 }
 
-void AppWindow::DrawMesh(const MeshPtr& mesh, const VertexShaderPtr& vs, const PixelShaderPtr& ps, const ConstantBufferPtr& cb, const TexturePtr& tex)
+void AppWindow::DrawMesh(const MeshPtr& mesh, const VertexShaderPtr& vs, const PixelShaderPtr& ps, const ConstantBufferPtr& cb, const TexturePtr* list_tex, unsigned int num_textures)
 {
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(vs, cb);
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(ps, cb);
@@ -138,7 +163,7 @@ void AppWindow::DrawMesh(const MeshPtr& mesh, const VertexShaderPtr& vs, const P
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexShader(vs);
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetPixelShader(ps);
 											  							   
-	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(ps, tex);
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(ps, list_tex, num_textures);
 											  							   
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW							   
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexBuffer(mesh->GetVertexBuffer());
@@ -169,27 +194,25 @@ void AppWindow::onCreate()
 	InputSystem::Get()->ShowCursor(false);
 
 	//Texture Generation
-	m_wood_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\brick.png");
-	m_sky_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\sky.jpg");
+	m_brick_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\brick.png");
+	m_sky_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\stars_map.jpg");
 
 	//Mesh Generation
-	m_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\suzanne.obj");
+	m_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\scene.obj");
 	m_sky_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\sphere.obj");
 
 	RECT rc = this->GetClientWindowRect();
 	m_swap_chain = GraphicsEngine::Get()->GetRenderSystem()->CreateSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	m_world_cam.SetTranslation(Vector3D(0, 0, -3));
-
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
 	//Shader Compilation
-	GraphicsEngine::Get()->GetRenderSystem()->CompileVertexShader(L"VertexShader.hlsl", "main", &shader_byte_code, &size_shader);
+	GraphicsEngine::Get()->GetRenderSystem()->CompileVertexShader(L"PointLightVertexShader.hlsl", "main", &shader_byte_code, &size_shader);
 	m_vs = GraphicsEngine::Get()->GetRenderSystem()->CreateVertexShader(shader_byte_code, size_shader);
 	GraphicsEngine::Get()->GetRenderSystem()->ReleaseCompiledShader();
 
-	GraphicsEngine::Get()->GetRenderSystem()->CompilePixelShader(L"PixelShader.hlsl", "main", &shader_byte_code, &size_shader);
+	GraphicsEngine::Get()->GetRenderSystem()->CompilePixelShader(L"PointLightPixelShader.hlsl", "main", &shader_byte_code, &size_shader);
 	m_ps = GraphicsEngine::Get()->GetRenderSystem()->CreatePixelShader(shader_byte_code, size_shader);
 	GraphicsEngine::Get()->GetRenderSystem()->ReleaseCompiledShader();
 
@@ -198,10 +221,11 @@ void AppWindow::onCreate()
 	GraphicsEngine::Get()->GetRenderSystem()->ReleaseCompiledShader();
 
 	constant cc;
-	//cc.m_time = 0;
 
 	m_cb = GraphicsEngine::Get()->GetRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant));
 	m_sky_cb = GraphicsEngine::Get()->GetRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant));
+
+	m_world_cam.SetTranslation(Vector3D(0, 5, -10));
 
 #pragma region Mesh Generation by Code
 //----------------------------------------------------------------------------------------------------------------------------------
@@ -443,6 +467,14 @@ void AppWindow::onKeyDown(int key)
 	{
 		//m_rot_y -= 3.14f*m_delta_time;
 		m_rightward = 1.0f;
+	}
+	else if (key == 'O')
+	{
+		m_light_radius = (m_light_radius <= 0) ? 0.0f : m_light_radius - 1.0f * m_delta_time;
+	}
+	else if (key == 'P')
+	{
+		m_light_radius += 1.0f * m_delta_time;
 	}
 	else if (key == VK_ESCAPE)
 	{

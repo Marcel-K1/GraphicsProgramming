@@ -50,7 +50,7 @@ public:
 	void UpdateSkyBox();
 		 
 	void DrawMesh(const MeshPtr& mesh, const VertexShaderPtr& vs, const PixelShaderPtr& ps, const ConstantBufferPtr& cb,
-		const TexturePtr& tex);
+		const TexturePtr* list_tex, unsigned int num_textures);
 
 private:
 	SwapChainPtr m_swap_chain;
@@ -69,7 +69,7 @@ private:
 
 	IndexBufferPtr m_ib;
 
-	TexturePtr m_wood_tex;
+	TexturePtr m_brick_tex;
 
 	TexturePtr m_sky_tex;
 
@@ -105,6 +105,11 @@ private:
 	Matrix4x4 m_world_cam;
 	Matrix4x4 m_view_cam;
 	Matrix4x4 m_proj_cam;
+
+	//Variables for Point Light
+	float m_time = 0.0f;
+	float m_light_radius = 4.0f;
+	float m_attenuation = 2.0f;
 
 	//Window Management
 	bool m_play_state = false;

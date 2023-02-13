@@ -1,2 +1,7 @@
-﻿  Mesh.cpp
+﻿  AppWindow.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\AppWindow.cpp(66,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
   DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\x64\Debug\DirectXEngine.exe
