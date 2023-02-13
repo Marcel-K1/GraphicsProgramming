@@ -21,7 +21,9 @@ struct constant
 	Matrix4x4 m_world;
 	Matrix4x4 m_view;
 	Matrix4x4 m_proj;
-	unsigned int m_time;
+	Vector4D m_light_direction;
+	Vector4D m_camera_position;
+	//unsigned int m_time;
 };
 
 AppWindow::AppWindow(UINT width, UINT height) : Window(width, height)
@@ -31,12 +33,12 @@ AppWindow::AppWindow(UINT width, UINT height) : Window(width, height)
 void AppWindow::Update()
 {
 	constant cc;
-	cc.m_time = ::GetTickCount64();
+	//cc.m_time = ::GetTickCount64();
 	m_delta_pos += m_delta_time / 10.0f;
 	if (m_delta_pos > 1.0f)
 		m_delta_pos = 0;
 
-
+	Matrix4x4 temp;
 
 	////For just changing Position of static quad
 	// 
@@ -100,7 +102,13 @@ void AppWindow::Update()
 
 	////For changing camera Position:
 	// 
-	Matrix4x4 temp;
+	// 
+	//Light
+	Matrix4x4 m_light_rot_matrix;
+	m_light_rot_matrix.SetIdentity();
+	m_light_rot_matrix.SetRotationY(m_light_rot_y);
+	m_light_rot_y += 0.707f * m_delta_time;
+	cc.m_light_direction = m_light_rot_matrix.GetZDirection();
 
 	m_delta_scale += m_delta_time / 0.55f;
 
@@ -119,9 +127,11 @@ void AppWindow::Update()
 
 	Vector3D new_pos = m_world_cam.GetTranslation() + world_cam.GetZDirection()*(m_forward * 0.1f);
 
-	new_pos = new_pos + world_cam.GetXDirection()*(m_rightward * 0.1f);
+	new_pos = new_pos + world_cam.GetXDirection()*(m_rightward * 0.01f);
 
 	world_cam.SetTranslation(new_pos);
+
+	cc.m_camera_position = new_pos;
 
 	m_world_cam = world_cam;
 
@@ -160,13 +170,13 @@ void AppWindow::onCreate()
 
 	//For making brick teapot
 	m_wood_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\brick.png");
-	m_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\teapot.obj");
+	m_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\statue.obj");
 
 	RECT rc = this->GetClientWindowRect();
 
 	m_swap_chain = GraphicsEngine::Get()->GetRenderSystem()->CreateSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	m_world_cam.SetTranslation(Vector3D(0, 0, -2));
+	m_world_cam.SetTranslation(Vector3D(0, 0, -1));
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
@@ -180,7 +190,7 @@ void AppWindow::onCreate()
 	GraphicsEngine::Get()->GetRenderSystem()->ReleaseCompiledShader();
 
 	constant cc;
-	cc.m_time = 0;
+	//cc.m_time = 0;
 
 	m_cb = GraphicsEngine::Get()->GetRenderSystem()->CreateConstantBuffer(&cc, sizeof(constant));
 

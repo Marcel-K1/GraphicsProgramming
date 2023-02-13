@@ -1,36 +1,7 @@
 ﻿  AppWindow.cpp
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\AppWindow.cpp(34,30): warning C4244: '=': conversion from 'ULONGLONG' to 'unsigned int', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\AppWindow.cpp(424,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
-  ConstantBuffer.cpp
-  DeviceContext.cpp
-  GraphicsEngine.cpp
-  IndexBuffer.cpp
-  InputSystem.cpp
-  main.cpp
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Mesh.cpp
-  MeshManager.cpp
-  PixelShader.cpp
-  RenderSystem.cpp
-  Resource.cpp
-  ResourceManager.cpp
-  SwapChain.cpp
-  Texture.cpp
-  TextureManager.cpp
-  VertexBuffer.cpp
-  VertexShader.cpp
-  Window.cpp
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Window.cpp(64,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Window.cpp(65,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Window.cpp(66,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\DirectXEngine\Window.cpp(67,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
-  Generating Code...
-  LINK : C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\x64\Debug\DirectXEngine.exe not found or not built by the last incremental link; performing full link
-  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\Graphics Programming_Youtube\GraphicsProgramming_Youtube\x64\Debug\DirectXEngine.exe
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\AppWindow.cpp(434,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
+  DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\x64\Debug\DirectXEngine.exe

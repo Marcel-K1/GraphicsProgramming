@@ -69,6 +69,9 @@ private:
 	float m_rot_x = 0.0f;
 	float m_rot_y = 0.0f;
 
+	//Variables for Light Settings
+	float m_light_rot_y = 0.0f;
+
 	//Variables for Input to change Scale
 	float m_scale_cube = 1;
 
