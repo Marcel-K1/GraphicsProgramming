@@ -3,10 +3,6 @@ struct VS_INPUT
 	float4 position: POSITION0;
 	float2 texcoord: TEXCOORD0;
 	float3 normal: NORMAL0;
-
-	//float4 position1: POSITION1;
-	//float3 color: COLOR;
-	//float3 color1: COLOR1;
 };
 
 struct VS_OUTPUT
@@ -15,9 +11,6 @@ struct VS_OUTPUT
 	float2 texcoord: TEXCOORD0;
 	float3 normal: TEXCOORD1;
 	float3 direction_to_camera: TEXCOORD2;
-
-	//float3 color: COLOR;
-	//float3 color1: COLOR1;
 };
 
 cbuffer constant: register(b0)
@@ -27,7 +20,6 @@ cbuffer constant: register(b0)
 	row_major float4x4 m_proj;
 	float4 m_light_direction;
 	float4 m_camera_position;
-	//unsigned int m_time;
 };
 
 VS_OUTPUT main(VS_INPUT input)
@@ -41,9 +33,6 @@ VS_OUTPUT main(VS_INPUT input)
 	output.position = mul(output.position, m_view);
 	//SCREEN SPACE
 	output.position = mul(output.position, m_proj);
-
-	//output.color = input.color;
-	//output.color1 = input.color1;
 
 	output.texcoord = input.texcoord;
 	output.normal = input.normal;

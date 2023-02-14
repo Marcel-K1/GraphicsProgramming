@@ -3,6 +3,7 @@
 //#include "DeviceContext.h"
 #include "GraphicsEngine.h"
 #include "RenderSystem.h"
+#include "DeviceContext.h"
 #include <exception>
 
 GraphicsEngine* GraphicsEngine::m_engine = nullptr;
@@ -49,6 +50,42 @@ TextureManager* GraphicsEngine::GetTextureManager()
 MeshManager* GraphicsEngine::GetMeshManager()
 {
 	return m_mesh_manager;
+}
+
+MaterialPtr GraphicsEngine::CreateMaterial(const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path)
+{
+	MaterialPtr mat = nullptr;
+	try
+	{
+		mat = std::make_shared<Material>(vertex_shader_path, pixel_shader_path);
+	}
+	catch (...) {}
+	return mat;
+}
+
+MaterialPtr GraphicsEngine::CreateMaterial(const MaterialPtr& material)
+{
+	MaterialPtr mat = nullptr;
+	try
+	{
+		mat = std::make_shared<Material>(material);
+	}
+	catch (...) {}
+	return mat;
+}
+
+void GraphicsEngine::SetMaterial(const MaterialPtr& material)
+{
+	GraphicsEngine::Get()->GetRenderSystem()->SetRasterizerState((material->m_cull_mode == CULL_MODE_FRONT));
+
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(material->m_vertex_shader, material->m_constant_buffer);
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(material->m_pixel_shader, material->m_constant_buffer);
+
+	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexShader(material->m_vertex_shader);
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetPixelShader(material->m_pixel_shader);
+
+	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(material->m_pixel_shader, &material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
 }
 
 void GraphicsEngine::GetVertexMeshLayoutShaderByteCodeAndSize(void** byte_code, size_t* size)

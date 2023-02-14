@@ -23,8 +23,9 @@ cbuffer constant: register(b0)
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-	float4 tex_color = TextureColor.Sample(TextureColorSampler, (1.0 - input.texcoord) * 2.0);
+	float4 tex_color = TextureColor.Sample(TextureColorSampler, (1.0 - input.texcoord));
 
+	//Phong Light Model:
 	//AMBIENT LIGHT
 	float ka = 1.5;
 	float3 ia = float3(0.09, 0.082, 0.082);

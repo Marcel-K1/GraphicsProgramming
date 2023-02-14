@@ -43,14 +43,15 @@ public:
 
 	void Update();
 
-	void UpdateModel();
+	void UpdateModel(Vector3D position, const MaterialPtr& material);
 
 	void UpdateCamera();
 
 	void UpdateSkyBox();
+
+	void UpdateLight();
 		 
-	void DrawMesh(const MeshPtr& mesh, const VertexShaderPtr& vs, const PixelShaderPtr& ps, const ConstantBufferPtr& cb,
-		const TexturePtr* list_tex, unsigned int num_textures);
+	void DrawMesh(const MeshPtr& mesh, const MaterialPtr& material);
 
 private:
 	SwapChainPtr m_swap_chain;
@@ -71,11 +72,37 @@ private:
 
 	TexturePtr m_brick_tex;
 
+	TexturePtr m_wall_tex;
+
 	TexturePtr m_sky_tex;
+
+	TexturePtr m_earth_tex;
+
+	TexturePtr m_wood_tex;
 
 	MeshPtr m_mesh;
 
 	MeshPtr m_sky_mesh;
+
+	MeshPtr m_torus_mesh;
+
+	MeshPtr m_suzanne_mesh;
+
+	MeshPtr m_plane_mesh;
+
+	MeshPtr m_box_mesh;
+
+	MaterialPtr m_mat;
+
+	MaterialPtr m_wood_mat;
+
+	MaterialPtr m_earth_mat;
+
+	MaterialPtr m_brick_mat;
+	
+	MaterialPtr m_wall_mat;
+
+	MaterialPtr m_sky_mat;
 
 private:
 	long m_old_delta;
@@ -110,6 +137,8 @@ private:
 	float m_time = 0.0f;
 	float m_light_radius = 4.0f;
 	float m_attenuation = 2.0f;
+
+	Vector4D m_light_position;
 
 	//Window Management
 	bool m_play_state = false;
