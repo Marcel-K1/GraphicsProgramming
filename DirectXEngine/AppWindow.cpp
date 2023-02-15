@@ -49,7 +49,7 @@ void AppWindow::Render()
 	{
 		//RENDER MODEL
 		UpdateModel(Vector3D(4.0f, 2.0f, -4.0f + 4.0f * i), m_wood_mat);
-		DrawMesh(m_box_mesh, m_wood_mat);
+		DrawMesh(m_sky_mesh, m_wood_mat);
 
 		//RENDER MODEL
 		UpdateModel(Vector3D(0.0f, 2.0f, -4.0f + 4.0f * i), m_earth_mat);
@@ -57,7 +57,7 @@ void AppWindow::Render()
 
 		//RENDER MODEL
 		UpdateModel(Vector3D(-4.0f, 2.0f, -4.0f + 4.0f * i), m_brick_mat);
-		DrawMesh(m_torus_mesh, m_brick_mat);
+		DrawMesh(m_sky_mesh, m_brick_mat);
 	}
 
 	//RENDER PLANE
@@ -73,7 +73,11 @@ void AppWindow::Render()
 	m_old_delta = m_new_delta;
 	m_new_delta = ::GetTickCount64();
 
-	m_delta_time = (m_old_delta) ? ((m_new_delta - m_old_delta) / 1000.0f) : 0;
+
+	m_delta_time = 0.0166666666f;
+	m_time += m_delta_time;
+
+	//m_delta_time = (m_old_delta) ? ((m_new_delta - m_old_delta) / 1000.0f) : 0;
 }
 
 void AppWindow::Update()
@@ -202,8 +206,12 @@ void AppWindow::onCreate()
 	m_play_state = true;
 	InputSystem::Get()->ShowCursor(false);
 
+	RECT rc = this->GetClientWindowRect();
+	m_swap_chain = GraphicsEngine::Get()->GetRenderSystem()->CreateSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+	
 	//Texture Generation
-	m_brick_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\brick.png");
+	m_brick_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\brick_d.jpg");
+	m_brick_normal_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\brick_n.jpg");
 	m_wall_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\wall.jpg");
 	m_sky_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\stars_map.jpg");
 	m_wood_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"..\\Assets\\Textures\\wood.jpg");
@@ -216,18 +224,12 @@ void AppWindow::onCreate()
 	m_plane_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\plane.obj");
 	m_box_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\box.obj");
 
-	RECT rc = this->GetClientWindowRect();
-	m_swap_chain = GraphicsEngine::Get()->GetRenderSystem()->CreateSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
-
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-
 	//Material Generation (sprich: Texture und Shader - Compilation)
 	m_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightVertexShader.hlsl", L"PointLightPixelShader.hlsl");
 	m_mat->AddTexture(m_wall_tex);
 	m_mat->SetCullMode(CULL_MODE_BACK);
 
-	m_wood_mat = GraphicsEngine::Get()->CreateMaterial(m_mat);
+	m_wood_mat = GraphicsEngine::Get()->CreateMaterial(L"DirectionalLightVertexShader.hlsl", L"DirectionalLightPixelShader.hlsl");
 	m_wood_mat->AddTexture(m_wood_tex);
 	m_wood_mat->SetCullMode(CULL_MODE_BACK);
 
@@ -235,8 +237,9 @@ void AppWindow::onCreate()
 	m_earth_mat->AddTexture(m_earth_tex);
 	m_earth_mat->SetCullMode(CULL_MODE_BACK);
 
-	m_brick_mat = GraphicsEngine::Get()->CreateMaterial(m_mat);
+	m_brick_mat = GraphicsEngine::Get()->CreateMaterial(L"DirLightNormalMappingVertexShader.hlsl", L"DirLightNormalMappingPixelShader.hlsl");
 	m_brick_mat->AddTexture(m_brick_tex);
+	m_brick_mat->AddTexture(m_brick_normal_tex);
 	m_brick_mat->SetCullMode(CULL_MODE_BACK);	
 
 	m_sky_mat = GraphicsEngine::Get()->CreateMaterial(L"DirectionalLightVertexShader.hlsl", L"SkyBoxShader.hlsl");

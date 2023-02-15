@@ -64,6 +64,9 @@
     <Filter Include="GameEngine\GraphicsEngine\Material">
       <UniqueIdentifier>{abfaa435-47dd-4bad-b899-69de70162658}</UniqueIdentifier>
     </Filter>
+    <Filter Include="App\Shaders\DirectionalLightNormalMappingShader">
+      <UniqueIdentifier>{581bcaed-d977-4f3d-ba0e-4d678208b673}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -179,9 +182,6 @@
     <ClInclude Include="RenderSystem.h">
       <Filter>GameEngine\GraphicsEngine\RenderSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Prerequisites.h">
-      <Filter>GameEngine\GraphicsEngine\RenderSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
     </ClInclude>
@@ -209,6 +209,9 @@
     <ClInclude Include="Material.h">
       <Filter>GameEngine\GraphicsEngine\Material</Filter>
     </ClInclude>
+    <ClInclude Include="Prerequisites.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexMeshLayoutShader.hlsl">
@@ -228,6 +231,12 @@
     </FxCompile>
     <FxCompile Include="PointLightPixelShader.hlsl">
       <Filter>App\Shaders\PointLightShader</Filter>
+    </FxCompile>
+    <FxCompile Include="DirLightNormalMappingVertexShader.hlsl">
+      <Filter>App\Shaders\DirectionalLightNormalMappingShader</Filter>
+    </FxCompile>
+    <FxCompile Include="DirLightNormalMappingPixelShader.hlsl">
+      <Filter>App\Shaders\DirectionalLightNormalMappingShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

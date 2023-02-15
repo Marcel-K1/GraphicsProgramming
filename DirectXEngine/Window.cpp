@@ -113,13 +113,13 @@ bool Window::Broadcast()
 		this->m_is_init = true;
 	}
 
-	this->onUpdate();
-
-	while (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0)
+	if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0)
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+
+	this->onUpdate();
 
 	Sleep(1);
 

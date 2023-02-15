@@ -72,6 +72,8 @@ private:
 
 	TexturePtr m_brick_tex;
 
+	TexturePtr m_brick_normal_tex;
+
 	TexturePtr m_wall_tex;
 
 	TexturePtr m_sky_tex;
