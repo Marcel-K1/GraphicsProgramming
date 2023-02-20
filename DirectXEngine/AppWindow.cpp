@@ -221,7 +221,7 @@ void AppWindow::onCreate()
 	m_sky_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"Assets\\Meshes\\sphere.obj");
 	//m_torus_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\torus.obj");
 	//m_suzanne_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\suzanne.obj");
-	m_plane_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"  Assets\\Meshes\\plane.obj");
+	m_plane_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"Assets\\Meshes\\plane.obj");
 	//m_box_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"..\\Assets\\Meshes\\box.obj");
 
 	//Material Generation (sprich: Texture und Shader - Compilation)
