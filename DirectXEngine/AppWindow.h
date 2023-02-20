@@ -32,12 +32,6 @@ public:
 	virtual void onKeyUp(int key) override;
 
 	virtual void onMouseMove(const Point& mouse_pos) override;
-
-	virtual void onLeftMouseDown(const Point& mouse_pos) override;
-	virtual void onLeftMouseUp(const Point& mouse_pos) override;
-	virtual void onRightMouseDown(const Point& mouse_pos) override;
-	virtual void onRightMouseUp(const Point& mouse_pos) override;
-
 public:
 	void Render();
 
@@ -121,9 +115,6 @@ private:
 
 	//Variables for Light Settings
 	float m_light_rot_y = 0.0f;
-
-	//Variables for Input to change Scale
-	float m_scale_cube = 1;
 
 	//Variables for changing Camera Position
 	float m_forward = 0.0f;

@@ -51,19 +51,7 @@ void InputSystem::Update()
 
 				while (it != m_set_listeners.end())
 				{
-					if (i == VK_LBUTTON)
-					{
-						if (m_keys_state[i] != m_old_keys_state[i])
-							(*it)->onLeftMouseDown(Point(current_mouse_pos.x, current_mouse_pos.y));
-					}
-					else if (i == VK_RBUTTON)
-					{
-						if (m_keys_state[i] != m_old_keys_state[i])
-							(*it)->onRightMouseDown(Point(current_mouse_pos.x, current_mouse_pos.y));
-					}
-					else
-						(*it)->onKeyDown(i);
-
+					(*it)->onKeyDown(i);
 					++it;
 				}
 			}
@@ -75,13 +63,7 @@ void InputSystem::Update()
 
 					while (it != m_set_listeners.end())
 					{
-						if (i == VK_LBUTTON)
-							(*it)->onLeftMouseUp(Point(current_mouse_pos.x, current_mouse_pos.y));
-						else if (i == VK_RBUTTON)
-							(*it)->onRightMouseUp(Point(current_mouse_pos.x, current_mouse_pos.y));
-						else
-							(*it)->onKeyUp(i);
-
+						(*it)->onKeyUp(i);
 						++it;
 					}
 				}

@@ -204,7 +204,7 @@ void AppWindow::onCreate()
 	//Material Generation
 
 	//With Matte Shader
-	m_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightVertexShader.hlsl", L"PointLightPixelShader.hlsl");
+	m_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightGlossyVertexShader.hlsl", L"PointLightGlossyPixelShader.hlsl");
 	m_mat->AddTexture(m_wall_tex);
 	m_mat->SetCullMode(CULL_MODE_BACK);
 
@@ -213,18 +213,18 @@ void AppWindow::onCreate()
 	m_earth_mat->SetCullMode(CULL_MODE_BACK);
 
 	//With Glossy Shader
-	m_wood_mat = GraphicsEngine::Get()->CreateMaterial(L"DirectionalLightVertexShader.hlsl", L"DirectionalLightPixelShader.hlsl");
+	m_wood_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightMatteVertexShader.hlsl", L"PointLightMattePixelShader.hlsl");
 	m_wood_mat->AddTexture(m_wood_tex);
 	m_wood_mat->SetCullMode(CULL_MODE_BACK);
 
 	//With Rough Shader
-	m_brick_mat = GraphicsEngine::Get()->CreateMaterial(L"DirLightNormalMappingVertexShader.hlsl", L"DirLightNormalMappingPixelShader.hlsl");
+	m_brick_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightRoughVertexShader.hlsl", L"PointLightRoughPixelShader.hlsl");
 	m_brick_mat->AddTexture(m_brick_tex);
 	m_brick_mat->AddTexture(m_brick_normal_tex);
 	m_brick_mat->SetCullMode(CULL_MODE_BACK);	
 
 	//Skybox Shader
-	m_sky_mat = GraphicsEngine::Get()->CreateMaterial(L"DirectionalLightVertexShader.hlsl", L"SkyBoxShader.hlsl");
+	m_sky_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightMatteVertexShader.hlsl", L"SkyBoxShader.hlsl");
 	m_sky_mat->AddTexture(m_sky_tex);
 	m_sky_mat->SetCullMode(CULL_MODE_FRONT);
 
@@ -269,22 +269,18 @@ void AppWindow::onKeyDown(int key)
 
 	if (key == 'W')
 	{
-		/*m_rot_x += 3.14f * m_delta_time;*/
 		m_forward = 1.0f;
 	}
 	else if (key == 'S')
 	{
-		/*m_rot_x -= 3.14f * m_delta_time;*/
 		m_forward = -1.0f;
 	}
 	else if (key == 'A')
 	{
-		//m_rot_y += 3.14f*m_delta_time;
 		m_rightward = -1.0f;
 	}
 	else if (key == 'D')
 	{
-		//m_rot_y -= 3.14f*m_delta_time;
 		m_rightward = 1.0f;
 	}
 	else if (key == 'O')
@@ -333,22 +329,3 @@ void AppWindow::onMouseMove(const Point & mouse_pos)
 	InputSystem::Get()->SetCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
 }
 
-void AppWindow::onLeftMouseDown(const Point& mouse_pos)
-{
-	m_scale_cube = 0.5f;
-}
-
-void AppWindow::onLeftMouseUp(const Point& mouse_pos)
-{
-	m_scale_cube = 1.0f;
-}
-
-void AppWindow::onRightMouseDown(const Point& mouse_pos)
-{
-	m_scale_cube = 2.0f;
-}
-
-void AppWindow::onRightMouseUp(const Point& mouse_pos)
-{
-	m_scale_cube = 1.0f;
-}

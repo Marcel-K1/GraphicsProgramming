@@ -55,17 +55,20 @@
     <Filter Include="App\Shaders">
       <UniqueIdentifier>{3388b871-ff16-4c2f-b450-6b09a195bb08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="App\Shaders\DirectionalLightShader">
-      <UniqueIdentifier>{3c5ff479-c160-496a-b118-0a807bfe552d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="App\Shaders\PointLightShader">
-      <UniqueIdentifier>{4fac90d7-1cd6-445a-b0e3-2c9efe60e0af}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameEngine\GraphicsEngine\Material">
       <UniqueIdentifier>{abfaa435-47dd-4bad-b899-69de70162658}</UniqueIdentifier>
     </Filter>
-    <Filter Include="App\Shaders\DirectionalLightNormalMappingShader">
+    <Filter Include="App\Shaders\GlobalShader">
+      <UniqueIdentifier>{b97f2976-7189-46a4-b405-4ffc0641b502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\Shaders\PointLightRoughShader">
       <UniqueIdentifier>{581bcaed-d977-4f3d-ba0e-4d678208b673}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\Shaders\PointLightMatteShader">
+      <UniqueIdentifier>{3c5ff479-c160-496a-b118-0a807bfe552d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\Shaders\PointLightGlossyShader">
+      <UniqueIdentifier>{4fac90d7-1cd6-445a-b0e3-2c9efe60e0af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -214,29 +217,29 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexMeshLayoutShader.hlsl">
-      <Filter>GameEngine\GraphicsEngine</Filter>
+    <FxCompile Include="PointLightMattePixelShader.hlsl">
+      <Filter>App\Shaders\PointLightMatteShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointLightMatteVertexShader.hlsl">
+      <Filter>App\Shaders\PointLightMatteShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointLightGlossyVertexShader.hlsl">
+      <Filter>App\Shaders\PointLightGlossyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointLightGlossyPixelShader.hlsl">
+      <Filter>App\Shaders\PointLightGlossyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointLightRoughVertexShader.hlsl">
+      <Filter>App\Shaders\PointLightRoughShader</Filter>
+    </FxCompile>
+    <FxCompile Include="PointLightRoughPixelShader.hlsl">
+      <Filter>App\Shaders\PointLightRoughShader</Filter>
     </FxCompile>
     <FxCompile Include="SkyBoxShader.hlsl">
-      <Filter>App\Shaders</Filter>
+      <Filter>App\Shaders\GlobalShader</Filter>
     </FxCompile>
-    <FxCompile Include="DirectionalLightPixelShader.hlsl">
-      <Filter>App\Shaders\DirectionalLightShader</Filter>
-    </FxCompile>
-    <FxCompile Include="DirectionalLightVertexShader.hlsl">
-      <Filter>App\Shaders\DirectionalLightShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PointLightVertexShader.hlsl">
-      <Filter>App\Shaders\PointLightShader</Filter>
-    </FxCompile>
-    <FxCompile Include="PointLightPixelShader.hlsl">
-      <Filter>App\Shaders\PointLightShader</Filter>
-    </FxCompile>
-    <FxCompile Include="DirLightNormalMappingVertexShader.hlsl">
-      <Filter>App\Shaders\DirectionalLightNormalMappingShader</Filter>
-    </FxCompile>
-    <FxCompile Include="DirLightNormalMappingPixelShader.hlsl">
-      <Filter>App\Shaders\DirectionalLightNormalMappingShader</Filter>
+    <FxCompile Include="VertexMeshLayoutShader.hlsl">
+      <Filter>App\Shaders\GlobalShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
