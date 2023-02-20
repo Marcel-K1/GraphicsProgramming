@@ -1,6 +1,3 @@
-//#include "GraphicsEngine.h"
-//#include "SwapChain.h"
-//#include "DeviceContext.h"
 #include "GraphicsEngine.h"
 #include "RenderSystem.h"
 #include "DeviceContext.h"
@@ -76,15 +73,18 @@ MaterialPtr GraphicsEngine::CreateMaterial(const MaterialPtr& material)
 
 void GraphicsEngine::SetMaterial(const MaterialPtr& material)
 {
+	//SET RASTERIZATION
 	GraphicsEngine::Get()->GetRenderSystem()->SetRasterizerState((material->m_cull_mode == CULL_MODE_FRONT));
 
+	//SET BUFFERS
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(material->m_vertex_shader, material->m_constant_buffer);
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetConstantBuffer(material->m_pixel_shader, material->m_constant_buffer);
 
-	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+	//SET SHADERS
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetVertexShader(material->m_vertex_shader);
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetPixelShader(material->m_pixel_shader);
 
+	//SET TEXTURES
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(material->m_pixel_shader, &material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
 }
 
