@@ -8,9 +8,13 @@
 #include "Texture.h"
 #include <exception>
 
+//Extension of the DirectXDevice to generate rendering commands and 
+//manage the render target(memory buffer on video ram, like the back buffer) and
+//setting up the render pipeline with the created resources by the render system(like shaders)
 DeviceContext::DeviceContext(ID3D11DeviceContext* device_context, RenderSystem* system) : m_system(system), m_device_context(device_context)
 {
 }
+
 
 void DeviceContext::ClearRenderTargetColor(const SwapChainPtr& swap_chain, float red, float green, float blue, float alpha)
 {
@@ -20,6 +24,8 @@ void DeviceContext::ClearRenderTargetColor(const SwapChainPtr& swap_chain, float
 	m_device_context->OMSetRenderTargets(1, &swap_chain->m_rtv, swap_chain->m_dsv);
 }
 
+
+//Input Assembler Stage
 void DeviceContext::SetVertexBuffer(const VertexBufferPtr& vertex_buffer)
 {
 	UINT stride = vertex_buffer->m_size_vertex;
@@ -33,42 +39,16 @@ void DeviceContext::SetIndexBuffer(const IndexBufferPtr& index_buffer)
 	m_device_context->IASetIndexBuffer(index_buffer->m_buffer, DXGI_FORMAT_R32_UINT, 0);
 }
 
-void DeviceContext::DrawTriangleList(UINT vertex_count, UINT start_vertex_index)
-{
-	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_device_context->Draw(vertex_count, start_vertex_index);
-}
 
-void DeviceContext::DrawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location)
-{
-	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_device_context->DrawIndexed(index_count, start_index_location, start_vertex_index);
-}
-
-void DeviceContext::DrawTriangleStrip(UINT vertex_count, UINT start_vertex_index)
-{
-	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	m_device_context->Draw(vertex_count, start_vertex_index);
-}
-
-void DeviceContext::SetViewportSize(UINT width, UINT height)
-{
-	D3D11_VIEWPORT vp = {};
-	vp.Width = (FLOAT)width;
-	vp.Height = (FLOAT)height;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	m_device_context->RSSetViewports(1, &vp);
-}
-
+//Vertex and Geometry Programmable Shaders Stage
 void DeviceContext::SetVertexShader(const VertexShaderPtr& vertex_shader)
 {
 	m_device_context->VSSetShader(vertex_shader->m_vs, nullptr, 0);
 }
 
-void DeviceContext::SetPixelShader(const PixelShaderPtr& pixel_shader)
+void DeviceContext::SetConstantBuffer(const VertexShaderPtr& vertex_shader, const ConstantBufferPtr& buffer)
 {
-	m_device_context->PSSetShader(pixel_shader->m_ps, nullptr, 0);
+	m_device_context->VSSetConstantBuffers(0, 1, &buffer->m_buffer);
 }
 
 void DeviceContext::SetTexture(const VertexShaderPtr& vertex_shader, const TexturePtr* texture, unsigned int num_textures)
@@ -84,6 +64,30 @@ void DeviceContext::SetTexture(const VertexShaderPtr& vertex_shader, const Textu
 	m_device_context->VSSetSamplers(0, num_textures, list_sampler);
 }
 
+
+//Rasterization Stage
+void DeviceContext::SetViewportSize(UINT width, UINT height)
+{
+	D3D11_VIEWPORT vp = {};
+	vp.Width = (FLOAT)width;
+	vp.Height = (FLOAT)height;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	m_device_context->RSSetViewports(1, &vp);
+}
+
+
+//Pixel Shader Stage
+void DeviceContext::SetPixelShader(const PixelShaderPtr& pixel_shader)
+{
+	m_device_context->PSSetShader(pixel_shader->m_ps, nullptr, 0);
+}
+
+void DeviceContext::SetConstantBuffer(const PixelShaderPtr& pixel_shader, const ConstantBufferPtr& buffer)
+{
+	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
+}
+
 void DeviceContext::SetTexture(const PixelShaderPtr& pixel_shader, const TexturePtr* texture, unsigned int num_textures)
 {
 	ID3D11ShaderResourceView* list_res[32];
@@ -97,15 +101,13 @@ void DeviceContext::SetTexture(const PixelShaderPtr& pixel_shader, const Texture
 	m_device_context->PSSetSamplers(0, num_textures, list_sampler);
 }
 
-void DeviceContext::SetConstantBuffer(const VertexShaderPtr& vertex_shader, const ConstantBufferPtr& buffer)
+//Rendering Command
+void DeviceContext::DrawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location)
 {
-	m_device_context->VSSetConstantBuffers(0, 1, &buffer->m_buffer);
+	m_device_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_device_context->DrawIndexed(index_count, start_index_location, start_vertex_index);
 }
 
-void DeviceContext::SetConstantBuffer(const PixelShaderPtr& pixel_shader, const ConstantBufferPtr& buffer)
-{
-	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
-}
 
 DeviceContext::~DeviceContext()
 {

@@ -5,7 +5,6 @@
 class VertexMesh
 {
 public:
-	//With Lighting:
 	VertexMesh() :m_position(), m_texcoord(), m_normal()
 	{
 	}
@@ -28,15 +27,6 @@ public:
 		m_binormal(vertex.m_binormal)
 	{
 	}
-
-	//Without Lighting:
-	//VertexMesh(Vector3D position, Vector2D texcoord) :m_position(position), m_texcoord(texcoord)
-	//{
-	//}
-
-	//VertexMesh(const VertexMesh& vertex) :m_position(vertex.m_position), m_texcoord(vertex.m_texcoord)
-	//{
-	//}
 
 	~VertexMesh()
 	{

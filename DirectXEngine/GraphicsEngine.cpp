@@ -5,7 +5,8 @@
 
 GraphicsEngine* GraphicsEngine::m_engine = nullptr;
 
-//As Singleton
+//Manager for the graphic system of the application, subdivided into RenderSystem and ResourceManager to allow the Single Responsability Principle.
+//As Singleton to provide global access.
 GraphicsEngine::GraphicsEngine()
 {
 	try
@@ -34,6 +35,7 @@ GraphicsEngine::GraphicsEngine()
 	m_render_system->ReleaseCompiledShader();
 }
 
+
 RenderSystem* GraphicsEngine::GetRenderSystem()
 {
 	return m_render_system;
@@ -48,6 +50,13 @@ MeshManager* GraphicsEngine::GetMeshManager()
 {
 	return m_mesh_manager;
 }
+
+void GraphicsEngine::GetVertexMeshLayoutShaderByteCodeAndSize(void** byte_code, size_t* size)
+{
+	*byte_code = m_mesh_layout_byte_code;
+	*size = m_mesh_layout_size;
+}
+
 
 MaterialPtr GraphicsEngine::CreateMaterial(const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path)
 {
@@ -71,6 +80,7 @@ MaterialPtr GraphicsEngine::CreateMaterial(const MaterialPtr& material)
 	return mat;
 }
 
+
 void GraphicsEngine::SetMaterial(const MaterialPtr& material)
 {
 	//SET RASTERIZATION
@@ -88,11 +98,6 @@ void GraphicsEngine::SetMaterial(const MaterialPtr& material)
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetTexture(material->m_pixel_shader, &material->m_vec_textures[0], (UINT)material->m_vec_textures.size());
 }
 
-void GraphicsEngine::GetVertexMeshLayoutShaderByteCodeAndSize(void** byte_code, size_t* size)
-{
-	*byte_code = m_mesh_layout_byte_code;
-	*size = m_mesh_layout_size;
-}
 
 GraphicsEngine::~GraphicsEngine()
 {
@@ -101,6 +106,7 @@ GraphicsEngine::~GraphicsEngine()
 	delete m_tex_manager;
 	delete m_render_system;
 }
+
 
 void GraphicsEngine::Create()
 {
@@ -113,6 +119,7 @@ void GraphicsEngine::Release()
 	if (!GraphicsEngine::m_engine) return;
 	delete GraphicsEngine::m_engine;
 }
+
 
 GraphicsEngine* GraphicsEngine::Get()
 {

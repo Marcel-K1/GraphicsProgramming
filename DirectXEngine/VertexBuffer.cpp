@@ -2,6 +2,7 @@
 #include "RenderSystem.h"
 #include <exception>
 
+//Memory Buffer, that contains a list of vertices(but with only one layout)
 VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list,
 	void* shader_byte_code, size_t size_byte_shader,
 	RenderSystem* system) : m_system(system), m_layout(0), m_buffer(0)
@@ -27,16 +28,6 @@ VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		//For Cube:
-		//{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
-		//{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
-		//{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 }
-		//For Quad:
-		//{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
-		//{"POSITION", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
-		//{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 },
-		//{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 36,D3D11_INPUT_PER_VERTEX_DATA ,0 }
-		//For Cube With Texture:
 		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
 		{"TEXCOORD", 0,  DXGI_FORMAT_R32G32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
 		{"NORMAL", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 20,D3D11_INPUT_PER_VERTEX_DATA ,0 },

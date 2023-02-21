@@ -25,6 +25,7 @@ struct constant
 	float m_time = 0.0f;
 };
 
+//Manages the initialization of the engine
 AppWindow::AppWindow(UINT width, UINT height) : Window(width, height)
 {
 }

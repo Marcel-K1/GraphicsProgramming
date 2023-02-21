@@ -7,6 +7,7 @@ class DeviceContext
 public:
 	DeviceContext(ID3D11DeviceContext* device_context, RenderSystem* system);
 
+
 	void ClearRenderTargetColor(const SwapChainPtr& swap_chain, float red, float green, float blue, float alpha);
 
 	void SetVertexBuffer(const VertexBufferPtr& vertex_buffer);
@@ -14,12 +15,7 @@ public:
 	void SetIndexBuffer(const IndexBufferPtr& index_buffer);
 
 
-
-	void DrawTriangleList(UINT vertex_count, UINT start_vertex_index);
-
 	void DrawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location);
-
-	void DrawTriangleStrip(UINT vertex_count, UINT start_vertex_index);
 
 
 	void SetViewportSize(UINT width, UINT height);

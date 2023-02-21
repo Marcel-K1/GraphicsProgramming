@@ -2,6 +2,7 @@
 #include "RenderSystem.h"
 #include <exception>
 
+//Used to show the render frames on screen, by double buffering with front and back buffer.
 SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) : m_system(system)
 {
 	ID3D11Device* device = m_system->m_d3d_device;
@@ -66,7 +67,6 @@ void SwapChain::ReloadBuffers(unsigned int width, unsigned int height)
 	ID3D11Device* device = m_system->m_d3d_device;
 
 	//Get the back buffer color and create its render target view
-	//--------------------------------
 	ID3D11Texture2D* buffer = NULL;
 	HRESULT hr = m_swap_chain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
 

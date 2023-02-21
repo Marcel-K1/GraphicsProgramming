@@ -10,7 +10,7 @@
 #include <d3dcompiler.h>
 #include <exception>
 
-//Initialize the GraphicsEngine and DirectX 11 Device
+//Initializes the GraphicsEngine and DirectX 11 Device/API
 RenderSystem::RenderSystem()
 {
 	D3D_DRIVER_TYPE driver_types[] =
@@ -219,19 +219,3 @@ void RenderSystem::InitRasterizerState()
 	desc.CullMode = D3D11_CULL_BACK;
 	m_d3d_device->CreateRasterizerState(&desc, &m_cull_back_state);
 }
-
-//Depricated Code
-////DEFAULT SIMPLE SHADERS
-//bool GraphicsEngine::CreateShaders()
-//{
-//	ID3DBlob* errblob = nullptr;
-//	D3DCompileFromFile(L"shader.fx", nullptr, nullptr, "psmain", "ps_5_0", NULL, NULL, &m_psblob, &errblob);
-//	m_d3d_device->CreatePixelShader(m_psblob->GetBufferPointer(), m_psblob->GetBufferSize(), nullptr, &m_ps);
-//	return true;
-//}
-//
-//bool GraphicsEngine::SetShaders()
-//{
-//	m_imm_context->PSSetShader(m_ps, nullptr, 0);
-//	return true;
-//}

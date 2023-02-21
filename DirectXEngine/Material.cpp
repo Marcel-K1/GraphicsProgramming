@@ -3,6 +3,7 @@
 #include <exception>
 #include <stdexcept>
 
+//Material consists of constant buffer, vertex and pixel shaders and a texture for the pixel shader to evaluate
 Material::Material(const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path)
 {
 	void* shader_byte_code = nullptr;
@@ -31,6 +32,7 @@ Material::~Material()
 {
 }
 
+//Using dynamic array with sharedPtr to manage multiple textures
 void Material::AddTexture(const TexturePtr& texture)
 {
 	m_vec_textures.push_back(texture);
