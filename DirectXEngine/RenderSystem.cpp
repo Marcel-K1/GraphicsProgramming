@@ -10,7 +10,7 @@
 #include <d3dcompiler.h>
 #include <exception>
 
-//Initializes the GraphicsEngine and DirectX 11 Device/API
+//Initializes the GraphicsEngine and DirectX 11 Device/API, by using sharedPtr, we skip the new keyword
 RenderSystem::RenderSystem()
 {
 	D3D_DRIVER_TYPE driver_types[] =
@@ -66,6 +66,11 @@ RenderSystem::~RenderSystem()
 	m_d3d_device->Release();
 }
 
+DeviceContextPtr RenderSystem::GetImmediateDeviceContext()
+{
+	return this->m_imm_device_context;
+}
+
 SwapChainPtr RenderSystem::CreateSwapChain(HWND hwnd, UINT width, UINT height)
 {
 	SwapChainPtr sc = nullptr;
@@ -75,12 +80,6 @@ SwapChainPtr RenderSystem::CreateSwapChain(HWND hwnd, UINT width, UINT height)
 	}
 	catch (...) {}
 	return sc;
-}
-
-
-DeviceContextPtr RenderSystem::GetImmediateDeviceContext()
-{
-	return this->m_imm_device_context;
 }
 
 VertexBufferPtr RenderSystem::CreateVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void*shader_byte_code, UINT size_byte_shader)

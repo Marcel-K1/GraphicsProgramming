@@ -12,12 +12,12 @@
 #include "Matrix4x4.h"
 
 
-class AppWindow : public Window, public InputListener
+class EngineWindow : public Window, public InputListener
 {
 public:
-	AppWindow(UINT width, UINT height);
+	EngineWindow(UINT width, UINT height);
 
-	~AppWindow();
+	~EngineWindow();
 
 	// Inherited via window
 	virtual void onCreate() override;

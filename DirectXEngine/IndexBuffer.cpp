@@ -2,6 +2,7 @@
 #include "RenderSystem.h"
 #include <exception>
 
+//Memory Buffer, that contains a list of indices, for the mesh to be build correctly using DrawINDEXEDTriangleList
 IndexBuffer::IndexBuffer(void* list_indices, UINT size_list, RenderSystem* system) : m_system(system), m_buffer(0)
 {
 	D3D11_BUFFER_DESC buff_desc = {};

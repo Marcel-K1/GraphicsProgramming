@@ -1,4 +1,4 @@
-#include "AppWindow.h"
+#include "EngineWindow.h"
 #include "InputSystem.h"
 
 int main()
@@ -13,7 +13,7 @@ int main()
 	{
 		try
 		{
-			AppWindow app(1024, 768);
+			EngineWindow app(1024, 768);
 			while (app.IsRun());
 		}
 		catch (...) {

@@ -1,4 +1,4 @@
-#include "AppWindow.h"
+#include "EngineWindow.h"
 #include <Windows.h>
 #include "Vector3D.h"
 #include "Vector2D.h"
@@ -12,6 +12,7 @@ struct vertex
 	Vector2D texcoord;
 };
 
+//Struct for the constant buffer
 __declspec(align(16))
 struct constant
 {
@@ -26,12 +27,12 @@ struct constant
 };
 
 //Manages the initialization of the engine
-AppWindow::AppWindow(UINT width, UINT height) : Window(width, height)
+EngineWindow::EngineWindow(UINT width, UINT height) : Window(width, height)
 {
 }
 
 
-void AppWindow::Render()
+void EngineWindow::Render()
 {
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->ClearRenderTargetColor(this->m_swap_chain,
@@ -80,14 +81,14 @@ void AppWindow::Render()
 
 }
 
-void AppWindow::Update()
+void EngineWindow::Update()
 {
 	UpdateCamera();
 	UpdateLight();
 	UpdateSkyBox();
 }
 
-void AppWindow::UpdateModel(Vector3D position, const MaterialPtr& material)
+void EngineWindow::UpdateModel(Vector3D position, const MaterialPtr& material)
 {
 	constant cc;
 	Matrix4x4 m_light_rot_matrix;
@@ -106,7 +107,7 @@ void AppWindow::UpdateModel(Vector3D position, const MaterialPtr& material)
 	material->SetData(&cc, sizeof(constant));
 }
 
-void AppWindow::UpdateCamera()
+void EngineWindow::UpdateCamera()
 {
 	Matrix4x4 world_cam, temp;
 	world_cam.SetIdentity();
@@ -137,7 +138,7 @@ void AppWindow::UpdateCamera()
 	m_proj_cam.SetPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
 }
 
-void AppWindow::UpdateSkyBox()
+void EngineWindow::UpdateSkyBox()
 {
 	constant cc;
 
@@ -150,7 +151,7 @@ void AppWindow::UpdateSkyBox()
 	m_sky_mat->SetData(&cc, sizeof(constant));
 }
 
-void AppWindow::UpdateLight()
+void EngineWindow::UpdateLight()
 {
 	//Gives the light a slight rotation
 	m_light_rot_y += 1.57f * m_delta_time;
@@ -158,7 +159,7 @@ void AppWindow::UpdateLight()
 	m_light_position = Vector4D(cos(m_light_rot_y) * dist_from_origin, 2.0f, sin(m_light_rot_y) * dist_from_origin, 1.0f);
 }
 
-void AppWindow::DrawMesh(const MeshPtr& mesh, const MaterialPtr& material)
+void EngineWindow::DrawMesh(const MeshPtr& mesh, const MaterialPtr& material)
 {
 	GraphicsEngine::Get()->SetMaterial(material);
 
@@ -173,12 +174,12 @@ void AppWindow::DrawMesh(const MeshPtr& mesh, const MaterialPtr& material)
 }
 
 
-AppWindow::~AppWindow()
+EngineWindow::~EngineWindow()
 {
 }
 
 
-void AppWindow::onCreate()
+void EngineWindow::onCreate()
 {
 	Window::onCreate();
 
@@ -232,14 +233,14 @@ void AppWindow::onCreate()
 	m_world_cam.SetTranslation(Vector3D(0, 5, -10));
 }
 
-void AppWindow::onUpdate()
+void EngineWindow::onUpdate()
 {
 	Window::onUpdate();
 	InputSystem::Get()->Update();
 	this->Render();
 }
 
-void AppWindow::onDestroy()
+void EngineWindow::onDestroy()
 {
 	Window::onDestroy();
 	m_swap_chain->SetFullScreen(false, 1, 1);
@@ -247,24 +248,24 @@ void AppWindow::onDestroy()
 
 
 //Input Event Methods
-void AppWindow::onFocus()
+void EngineWindow::onFocus()
 {
 	InputSystem::Get()->AddListener(this);
 }
 
-void AppWindow::onKillFocus()
+void EngineWindow::onKillFocus()
 {
 	InputSystem::Get()->RemoveListener(this);
 }
 
-void AppWindow::onSize()
+void EngineWindow::onSize()
 {
 	RECT rc = this->GetClientWindowRect();
 	m_swap_chain->Resize(rc.right, rc.bottom);
 	this->Render();
 }
 
-void AppWindow::onKeyDown(int key)
+void EngineWindow::onKeyDown(int key)
 {
 	if (!m_play_state) return;
 
@@ -298,7 +299,7 @@ void AppWindow::onKeyDown(int key)
 	}
 }
 
-void AppWindow::onKeyUp(int key)
+void EngineWindow::onKeyUp(int key)
 {
 	m_forward = 0.0f;
 	m_rightward = 0.0f;
@@ -317,7 +318,7 @@ void AppWindow::onKeyUp(int key)
 	}
 }
 
-void AppWindow::onMouseMove(const Point & mouse_pos)
+void EngineWindow::onMouseMove(const Point & mouse_pos)
 {
 	if (!m_play_state) return;
 

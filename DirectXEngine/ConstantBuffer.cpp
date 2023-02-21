@@ -3,6 +3,7 @@
 #include "DeviceContext.h"
 #include <exception>
 
+//Memory Buffer, allows to put in any data you want, to then pass it to any shader
 ConstantBuffer::ConstantBuffer(void* buffer, UINT size_buffer, RenderSystem* system) : m_system(system)
 {
 	D3D11_BUFFER_DESC buff_desc = {};

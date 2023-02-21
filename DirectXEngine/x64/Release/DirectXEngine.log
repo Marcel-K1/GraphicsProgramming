@@ -1,27 +1,39 @@
-﻿  AppWindow.cpp
+﻿  EngineWindow.cpp
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\AppWindow.cpp(76,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\EngineWindow.cpp(77,32): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
   ConstantBuffer.cpp
   DeviceContext.cpp
   GraphicsEngine.cpp
-  Mesh.cpp
-C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Vector3D.h(43,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  PixelShader.cpp
-  RenderSystem.cpp
-  SwapChain.cpp
-  VertexBuffer.cpp
-  VertexShader.cpp
+  IndexBuffer.cpp
+  InputSystem.cpp
   main.cpp
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(101,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(102,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Material.cpp
+  Mesh.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Vector3D.h(43,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  MeshManager.cpp
+  PixelShader.cpp
+  RenderSystem.cpp
+  Resource.cpp
+  ResourceManager.cpp
+  SwapChain.cpp
+  Texture.cpp
+  TextureManager.cpp
+  VertexBuffer.cpp
+  VertexShader.cpp
+  Window.cpp
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(71,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(72,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(73,25): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
+C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(74,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
   Generating code
-  2 of 2684 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+  All 2684 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\x64\Release\DirectXEngine.exe
