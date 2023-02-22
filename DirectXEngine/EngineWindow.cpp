@@ -44,32 +44,25 @@ void EngineWindow::Render()
 	GraphicsEngine::Get()->GetRenderSystem()->GetImmediateDeviceContext()->SetViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 
-	//COMPUTE TRANSFORM MATRICES
+	//COMPUTE MATRICES
 	Update();
 
 	//Rendering more than one Object
 	for (int i = 0; i < 3; i++)
 	{
-		//RENDER MODEL
-		UpdateModel(Vector3D(4.0f, 2.0f, -4.0f + 4.0f * i), m_wood_mat);
-		DrawMesh(m_sky_mesh, m_wood_mat);
+		UpdateModel(Vector3D(4.0f, 2.0f, -4.0f + 4.0f * i), m_matte_mat);
+		DrawMesh(m_sphere_mesh, m_matte_mat);
 
-		//RENDER MODEL
-		UpdateModel(Vector3D(0.0f, 2.0f, -4.0f + 4.0f * i), m_earth_mat);
-		DrawMesh(m_sky_mesh, m_earth_mat);
+		UpdateModel(Vector3D(0.0f, 2.0f, -4.0f + 4.0f * i), m_glossy_mat);
+		DrawMesh(m_sphere_mesh, m_glossy_mat);
 
-		//RENDER MODEL
-		UpdateModel(Vector3D(-4.0f, 2.0f, -4.0f + 4.0f * i), m_brick_mat);
-		DrawMesh(m_sky_mesh, m_brick_mat);
+		UpdateModel(Vector3D(-4.0f, 2.0f, -4.0f + 4.0f * i), m_rough_mat);
+		DrawMesh(m_sphere_mesh, m_rough_mat);
 	}
 
 	//RENDER PLANE
-	UpdateModel(Vector3D(0, 0, 0), m_mat);
-	DrawMesh(m_plane_mesh, m_mat);
-
-	//RENDER SKYBOX/SPHERE
-	DrawMesh(m_sky_mesh, m_sky_mat);
-
+	UpdateModel(Vector3D(0, 0, 0), m_ground_mat);
+	DrawMesh(m_plane_mesh, m_ground_mat);
 
 	m_swap_chain->Present(true);
 
@@ -85,7 +78,6 @@ void EngineWindow::Update()
 {
 	UpdateCamera();
 	UpdateLight();
-	UpdateSkyBox();
 }
 
 void EngineWindow::UpdateModel(Vector3D position, const MaterialPtr& material)
@@ -138,25 +130,16 @@ void EngineWindow::UpdateCamera()
 	m_proj_cam.SetPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
 }
 
-void EngineWindow::UpdateSkyBox()
-{
-	constant cc;
-
-	cc.m_world.SetIdentity();
-	cc.m_world.SetScale(Vector3D(100.0f, 100.0f, 100.0f));
-	cc.m_world.SetTranslation(m_world_cam.GetTranslation());
-	cc.m_view = m_view_cam;
-	cc.m_proj = m_proj_cam;
-
-	m_sky_mat->SetData(&cc, sizeof(constant));
-}
-
 void EngineWindow::UpdateLight()
 {
-	//Gives the light a slight rotation
+	//m_light_position = Vector4D(0, 2.0f, 0, 6.0f);
+	/*m_light_radius = 4.0f;*/
+
 	m_light_rot_y += 1.57f * m_delta_time;
+	m_light_radius = 4.0f;
+	m_light_radius = m_light_radius;
 	float dist_from_origin = 3.0f;
-	m_light_position = Vector4D(cos(m_light_rot_y) * dist_from_origin, 2.0f, sin(m_light_rot_y) * dist_from_origin, 1.0f);
+	m_light_position = Vector4D(cos(m_light_rot_y) * dist_from_origin, 3.1f, sin(m_light_rot_y) * dist_from_origin, 1.0f);
 }
 
 void EngineWindow::DrawMesh(const MeshPtr& mesh, const MaterialPtr& material)
@@ -192,43 +175,37 @@ void EngineWindow::onCreate()
 	m_swap_chain = GraphicsEngine::Get()->GetRenderSystem()->CreateSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 	
 	//Texture Generation (Important to keep the paths correct! Otherwise nothing will be renderered.)
-	m_brick_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\brick_d.jpg");
-	m_brick_normal_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\brick_n.jpg");
-	m_wall_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\wall.jpg");
-	m_sky_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\stars_map.jpg");
-	m_wood_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\wood.jpg");
-	m_earth_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\earth_color.jpg");
+	m_rough_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\RoughTexture.jpg");
+	m_rough_normal_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\RoughTexture_Normal.jpg");
+	m_ground_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\GroundTexture_3.jpg");
+	m_glossy_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\GlossyTexture.jpg");
+	m_matte_tex = GraphicsEngine::Get()->GetTextureManager()->CreateTextureFromFile(L"Assets\\Textures\\MatteTexture.jpg");
 
 	//Mesh Generation
-	m_sky_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"Assets\\Meshes\\sphere.obj");
+	m_sphere_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"Assets\\Meshes\\sphere.obj");
 	m_plane_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"Assets\\Meshes\\plane.obj");
 
 	//Material Generation
 
 	//With Matte Shader
-	m_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightGlossyVertexShader.hlsl", L"PointLightGlossyPixelShader.hlsl");
-	m_mat->AddTexture(m_wall_tex);
-	m_mat->SetCullMode(CULL_MODE_BACK);
-
-	m_earth_mat = GraphicsEngine::Get()->CreateMaterial(m_mat);
-	m_earth_mat->AddTexture(m_earth_tex);
-	m_earth_mat->SetCullMode(CULL_MODE_BACK);
+	m_matte_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightMatteVertexShader.hlsl", L"PointLightMattePixelShader.hlsl");
+	m_matte_mat->AddTexture(m_matte_tex);
+	m_matte_mat->SetCullMode(CULL_MODE_BACK);
 
 	//With Glossy Shader
-	m_wood_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightMatteVertexShader.hlsl", L"PointLightMattePixelShader.hlsl");
-	m_wood_mat->AddTexture(m_wood_tex);
-	m_wood_mat->SetCullMode(CULL_MODE_BACK);
+	m_glossy_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightGlossyVertexShader.hlsl", L"PointLightGlossyPixelShader.hlsl");
+	m_glossy_mat->AddTexture(m_glossy_tex);
+	m_glossy_mat->SetCullMode(CULL_MODE_BACK);
+
+	m_ground_mat = GraphicsEngine::Get()->CreateMaterial(m_glossy_mat);
+	m_ground_mat->AddTexture(m_ground_tex);
+	m_ground_mat->SetCullMode(CULL_MODE_BACK);
 
 	//With Rough Shader
-	m_brick_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightRoughVertexShader.hlsl", L"PointLightRoughPixelShader.hlsl");
-	m_brick_mat->AddTexture(m_brick_tex);
-	m_brick_mat->AddTexture(m_brick_normal_tex);
-	m_brick_mat->SetCullMode(CULL_MODE_BACK);	
-
-	//Skybox Shader
-	m_sky_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightMatteVertexShader.hlsl", L"SkyBoxShader.hlsl");
-	m_sky_mat->AddTexture(m_sky_tex);
-	m_sky_mat->SetCullMode(CULL_MODE_FRONT);
+	m_rough_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightRoughVertexShader.hlsl", L"PointLightRoughPixelShader.hlsl");
+	m_rough_mat->AddTexture(m_rough_tex);
+	m_rough_mat->AddTexture(m_rough_normal_tex);
+	m_rough_mat->SetCullMode(CULL_MODE_BACK);	
 
 	m_world_cam.SetTranslation(Vector3D(0, 5, -10));
 }

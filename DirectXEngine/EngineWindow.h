@@ -41,8 +41,6 @@ public:
 
 	void UpdateCamera();
 
-	void UpdateSkyBox();
-
 	void UpdateLight();
 		 
 	void DrawMesh(const MeshPtr& mesh, const MaterialPtr& material);
@@ -66,43 +64,34 @@ private:
 	IndexBufferPtr m_ib;
 
 	//Textures
-	TexturePtr m_brick_tex;
+	TexturePtr m_rough_tex;
 
-	TexturePtr m_brick_normal_tex;
+	TexturePtr m_rough_normal_tex;
 
-	TexturePtr m_wall_tex;
+	TexturePtr m_ground_tex;
 
-	TexturePtr m_sky_tex;
+	TexturePtr m_matte_tex;
 
-	TexturePtr m_earth_tex;
-
-	TexturePtr m_wood_tex;
+	TexturePtr m_glossy_tex;
 
 	//Meshes
 	MeshPtr m_mesh;
 
-	MeshPtr m_sky_mesh;
-
-	MeshPtr m_torus_mesh;
-
-	MeshPtr m_suzanne_mesh;
+	MeshPtr m_sphere_mesh;
 
 	MeshPtr m_plane_mesh;
-
-	MeshPtr m_box_mesh;
 
 	//Materials
 	MaterialPtr m_mat;
 
-	MaterialPtr m_wood_mat;
+	MaterialPtr m_matte_mat;
 
-	MaterialPtr m_earth_mat;
+	MaterialPtr m_glossy_mat;
 
-	MaterialPtr m_brick_mat;
+	MaterialPtr m_rough_mat;
 	
-	MaterialPtr m_wall_mat;
+	MaterialPtr m_ground_mat;
 
-	MaterialPtr m_sky_mat;
 
 private:
 	//Variables for time managment
@@ -136,5 +125,7 @@ private:
 	//Window Management
 	bool m_play_state = false;
 	bool m_fullscreen_state = false;
+
+	float m_delta_scale;
 };
 

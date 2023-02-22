@@ -33,6 +33,16 @@ public:
 			+ v1.m_z * (v2.m_x * v3.m_y - v3.m_x * v2.m_y));
 	}
 
+	static Vector4D Lerp(const Vector4D& start, const Vector4D& end, float delta)
+	{
+		Vector4D v;
+		v.m_x = start.m_x * (1.0f - delta) + end.m_x * (delta);
+		v.m_y = start.m_y * (1.0f - delta) + end.m_y * (delta);
+		v.m_z = start.m_z * (1.0f - delta) + end.m_z * (delta);
+		v.m_w = start.m_w * (1.0f - delta) + end.m_w * (delta);
+		return v;
+	}
+
 	~Vector4D()
 	{
 	}

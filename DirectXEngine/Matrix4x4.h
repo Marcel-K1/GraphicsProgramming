@@ -26,11 +26,12 @@ public:
 		m_mat[3][2] = translation.m_z;
 	}
 
-	void SetScale(const Vector3D& scale)
+	void SetScale(const Vector4D& scale)
 	{
 		m_mat[0][0] = scale.m_x;
 		m_mat[1][1] = scale.m_y;
 		m_mat[2][2] = scale.m_z;
+		m_mat[3][3] = scale.m_w;
 	}
 
 	void SetRotationX(float x)
