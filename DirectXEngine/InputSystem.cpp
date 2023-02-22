@@ -55,7 +55,8 @@ void InputSystem::Update()
 					++it;
 				}
 			}
-			else //KEY IS UP
+			//KEY IS UP
+			else
 			{
 				if (m_keys_state[i] != m_old_keys_state[i])
 				{

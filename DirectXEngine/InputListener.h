@@ -12,10 +12,10 @@ public:
 	{
 	}
 
-	//KEYBOARD pure virtual callback functions 
+	//KEYBOARD virtual functions 
 	virtual void onKeyDown(int key) = 0;
 	virtual void onKeyUp(int key) = 0;
 
-	//MOUSE pure virtual callback functions
+	//MOUSE virtual functions
 	virtual void onMouseMove(const Point& mouse_pos) = 0;
 };

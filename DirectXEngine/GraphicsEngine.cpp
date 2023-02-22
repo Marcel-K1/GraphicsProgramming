@@ -27,6 +27,7 @@ GraphicsEngine::GraphicsEngine()
 	}
 	catch (...) { throw std::exception("MeshManager not created successfully"); }
 
+	//Compiling the data structure for the needed size of the created vertex mesh.
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 	m_render_system->CompileVertexShader(L"VertexMeshLayoutShader.hlsl", "main", &shader_byte_code, &size_shader);

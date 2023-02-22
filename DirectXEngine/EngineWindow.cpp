@@ -132,9 +132,11 @@ void EngineWindow::UpdateCamera()
 
 void EngineWindow::UpdateLight()
 {
+	//Static
 	//m_light_position = Vector4D(0, 2.0f, 0, 6.0f);
 	/*m_light_radius = 4.0f;*/
 
+	//Moving
 	m_light_rot_y += 1.57f * m_delta_time;
 	m_light_radius = 4.0f;
 	m_light_radius = m_light_radius;
@@ -186,7 +188,6 @@ void EngineWindow::onCreate()
 	m_plane_mesh = GraphicsEngine::Get()->GetMeshManager()->CreateMeshFromFile(L"Assets\\Meshes\\plane.obj");
 
 	//Material Generation
-
 	//With Matte Shader
 	m_matte_mat = GraphicsEngine::Get()->CreateMaterial(L"PointLightMatteVertexShader.hlsl", L"PointLightMattePixelShader.hlsl");
 	m_matte_mat->AddTexture(m_matte_tex);

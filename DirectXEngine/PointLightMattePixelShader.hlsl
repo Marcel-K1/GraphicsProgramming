@@ -27,14 +27,14 @@ float4 main(PS_INPUT input) : SV_TARGET
 
 	//Phong Light Model:
 	//AMBIENT LIGHT
-	float ka = 3;
-	float3 ia = float3(0.09, 0.082, 0.082);
-	ia *= (tex_color.rgb);
+	float constantAmbient = 5;
+	float3 ambientColor = float3(0.09, 0.082, 0.082);
+	ambientColor *= (tex_color.rgb);
 
-	float3 ambient_light = ka * ia;
+	float3 ambient_light = constantAmbient * ambientColor;
 
 	//DIFFUSE LIGHT
-	float kd = 0.7;
+	float constantDiffuse = 0.7;
 	float3 light_dir = normalize(m_light_position.xyz - input.world_pos.xyz);
 	float distance_light_object = length(m_light_position.xyz - input.world_pos.xyz);
 
@@ -47,20 +47,20 @@ float4 main(PS_INPUT input) : SV_TARGET
 	float attenuation = constant_func + linear_func * fade_area + quadratic_func * fade_area * fade_area;
 
 	float amount_diffuse_light = max(0, dot(light_dir.xyz, input.normal));
-	float3 id = float3(1, 1, 1);
-	id *= (tex_color.rgb);
+	float3 diffuseColor = float3(1, 1, 1);
+	diffuseColor *= (tex_color.rgb);
 
-	float3 diffuse_light = (kd * id * amount_diffuse_light) / attenuation;
+	float3 diffuse_light = (constantDiffuse * diffuseColor * amount_diffuse_light) / attenuation;
 
 	//SPECULAR LIGHT
-	float ks = 0.0;
+	float constantSpecular = 0.0;
 	float3 direction_to_camera = normalize(input.world_pos.xyz - m_camera_position.xyz);
-	float3 is = float3(1.0, 1.0, 1.0);
+	float3 specularColor = float3(1.0, 1.0, 1.0);
 	float3 reflected_light = reflect(light_dir.xyz, input.normal);
 	float shininess = 30.0;
 	float amount_specular_light = pow(max(0.0, dot(reflected_light, direction_to_camera)), shininess);
 
-	float3 specular_light = (ks * amount_specular_light * is) / attenuation;
+	float3 specular_light = (constantSpecular * amount_specular_light * specularColor) / attenuation;
 
 	//FINAL LIGHT
 	float3 final_light = ambient_light + diffuse_light + specular_light;

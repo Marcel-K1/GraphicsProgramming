@@ -29,7 +29,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 
 	if (shapes.size() > 1) throw std::exception("Mesh not created successfully");
 
-
+	//Setting up the vertices and indices for the mesh
 	std::vector<VertexMesh> list_vertices;
 	std::vector<unsigned int> list_indices;
 
@@ -105,6 +105,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 				v_binormal = Vector3D::Cross(Vector3D(nx, ny, nz), tangent);
 				v_tangent = Vector3D::Cross(v_binormal, Vector3D(nx, ny, nz));
 
+				//Populating the VertexMesh with the computed data for all parts of the vertex
 				VertexMesh vertex(Vector3D(vx, vy, vz), Vector2D(tx, ty), Vector3D(nx, ny, nz), v_tangent, v_binormal);
 
 				list_vertices.push_back(vertex);
@@ -115,6 +116,7 @@ Mesh::Mesh(const wchar_t* full_path) : Resource(full_path)
 		}
 	}
 
+	//Setting up the right size for the different buffers, depending on which mesh is to be loaded, by using the VertexMeshLayoutShader.
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 	GraphicsEngine::Get()->GetVertexMeshLayoutShaderByteCodeAndSize(&shader_byte_code, &size_shader);

@@ -125,7 +125,5 @@ private:
 	//Window Management
 	bool m_play_state = false;
 	bool m_fullscreen_state = false;
-
-	float m_delta_scale;
 };
 
