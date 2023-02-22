@@ -23,11 +23,11 @@ cbuffer constant: register(b0)
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-	float4 tex_color = TextureColor.Sample(TextureColorSampler, (1.0 - input.texcoord));
+	float4 tex_color = TextureColor.Sample(TextureColorSampler, float2(input.texcoord.x, 1.0 - input.texcoord.y));
 
 	//Phong Light Model:
 	//AMBIENT LIGHT
-	float ka = 5;
+	float ka = 3;
 	float3 ia = float3(0.09, 0.082, 0.082);
 	ia *= (tex_color.rgb);
 
@@ -38,7 +38,7 @@ float4 main(PS_INPUT input) : SV_TARGET
 	float3 light_dir = normalize(m_light_position.xyz - input.world_pos.xyz);
 	float distance_light_object = length(m_light_position.xyz - input.world_pos.xyz);
 
-	float fade_area = max(0,distance_light_object - m_light_radius);
+	float fade_area = max(0, distance_light_object - m_light_radius);
 
 	float constant_func = 1.0;
 	float linear_func = 1.0;
@@ -46,8 +46,8 @@ float4 main(PS_INPUT input) : SV_TARGET
 
 	float attenuation = constant_func + linear_func * fade_area + quadratic_func * fade_area * fade_area;
 
-	float amount_diffuse_light = max(0,dot(light_dir.xyz, input.normal));
-	float3 id = float3(1,1,1);
+	float amount_diffuse_light = max(0, dot(light_dir.xyz, input.normal));
+	float3 id = float3(1, 1, 1);
 	id *= (tex_color.rgb);
 
 	float3 diffuse_light = (kd * id * amount_diffuse_light) / attenuation;
@@ -57,7 +57,7 @@ float4 main(PS_INPUT input) : SV_TARGET
 	float3 direction_to_camera = normalize(input.world_pos.xyz - m_camera_position.xyz);
 	float3 is = float3(1.0, 1.0, 1.0);
 	float3 reflected_light = reflect(light_dir.xyz, input.normal);
-	float shininess = 30.0;
+	float shininess = 20.0;
 	float amount_specular_light = pow(max(0.0, dot(reflected_light, direction_to_camera)), shininess);
 
 	float3 specular_light = (ks * amount_specular_light * is) / attenuation;

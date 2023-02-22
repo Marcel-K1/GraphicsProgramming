@@ -10,7 +10,7 @@
 #include <d3dcompiler.h>
 #include <exception>
 
-//Initializes the GraphicsEngine and DirectX 11 Device/API, by using sharedPtr, we skip the new keyword
+//Initializes the GraphicsEngine and DirectX 11 Device/API, by using sharedPtr, we shorthen the code base and make them more accesible
 RenderSystem::RenderSystem()
 {
 	D3D_DRIVER_TYPE driver_types[] =

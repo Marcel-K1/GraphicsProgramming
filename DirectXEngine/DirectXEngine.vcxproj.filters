@@ -235,9 +235,6 @@
     <FxCompile Include="PointLightRoughPixelShader.hlsl">
       <Filter>Application\Shaders\PointLightRoughShader</Filter>
     </FxCompile>
-    <FxCompile Include="SkyBoxShader.hlsl">
-      <Filter>Application\Shaders\GlobalShader</Filter>
-    </FxCompile>
     <FxCompile Include="VertexMeshLayoutShader.hlsl">
       <Filter>Application\Shaders\GlobalShader</Filter>
     </FxCompile>

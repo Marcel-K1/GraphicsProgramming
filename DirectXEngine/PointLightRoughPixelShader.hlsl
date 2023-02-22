@@ -1,5 +1,5 @@
-Texture2D Color: register(t0);
-sampler ColorSampler: register(s0);
+Texture2D TextureColor: register(t0);
+sampler TextureColorSampler: register(s0);
 
 Texture2D Normal: register(t1);
 sampler NormalSampler: register(s1);
@@ -9,7 +9,8 @@ struct PS_INPUT
 {
 	float4 position: SV_POSITION;
 	float2 texcoord: TEXCOORD0;
-	float3 direction_to_camera: TEXCOORD1;
+	float3 normal: NORMAL0;
+	float3 world_pos: TEXCOORD1;
 	row_major float3x3 tbn: TEXCOORD2;
 };
 
@@ -27,7 +28,7 @@ cbuffer constant: register(b0)
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-	float4 color = Color.Sample(ColorSampler, float2(input.texcoord.x,1.0 - input.texcoord.y));
+	float4 tex_color = TextureColor.Sample(TextureColorSampler, float2(input.texcoord.x,1.0 - input.texcoord.y));
 	float4 normal = Normal.Sample(NormalSampler, float2(input.texcoord.x, 1.0 - input.texcoord.y));
 
 	normal.xyz = (normal.xyz * 2.0) - 1.0;
@@ -35,34 +36,46 @@ float4 main(PS_INPUT input) : SV_TARGET
 
 	float dot_nl = dot(m_light_direction.xyz, input.tbn[2]);
 
+	//Phong Light Model:
 	//AMBIENT LIGHT
-	float ka = 8.5;
+	float ka = 3;
 	float3 ia = float3(0.09, 0.082, 0.082);
-	ia *= (color.rgb);
+	ia *= (tex_color.rgb);
 
 	float3 ambient_light = ka * ia;
 
 	//DIFFUSE LIGHT
 	float kd = 0.7;
-	float amount_diffuse_light = dot(m_light_direction.xyz, normal.xyz);
-	float3 id = float3(1, 1, 1);
-	id *= (color.rgb);
+	float3 light_dir = normalize(m_light_position.xyz - input.world_pos.xyz);
+	float distance_light_object = length(m_light_position.xyz - input.world_pos.xyz);
 
-	float3 diffuse_light = kd * id * amount_diffuse_light;
+	float fade_area = max(0, distance_light_object - m_light_radius);
+
+	float constant_func = 1.0;
+	float linear_func = 1.0;
+	float quadratic_func = 1.0;
+
+	float attenuation = constant_func + linear_func * fade_area + quadratic_func * fade_area * fade_area;
+
+	float amount_diffuse_light = max(0, dot(light_dir.xyz, normal));
+	float3 id = float3(1, 1, 1);
+	id *= (tex_color.rgb);
+
+	float3 diffuse_light = (kd * id * amount_diffuse_light) / attenuation;
 
 	//SPECULAR LIGHT
 	float ks = 0;
+	float3 direction_to_camera = normalize(input.world_pos.xyz - m_camera_position.xyz);
 	float3 is = float3(1.0, 1.0, 1.0);
-	float3 reflected_light = reflect(m_light_direction.xyz, normal.xyz);
-	float shininess = 10.0;
-	float amount_specular_light = 0;
+	float3 reflected_light = reflect(light_dir.xyz, normal);
+	float shininess = 30.0;
+	float amount_specular_light = pow(max(0.0, dot(reflected_light, direction_to_camera)), shininess);
 
-	if (dot_nl > 0)
-		amount_specular_light = pow(max(0.0, dot(reflected_light, input.direction_to_camera)), shininess);
+	float3 specular_light = (ks * amount_specular_light * is) / attenuation;
 
-	float3 specular_light = ks * amount_specular_light * is;
-
+	//FINAL LIGHT
 	float3 final_light = ambient_light + diffuse_light + specular_light;
 
-	return float4(final_light,1.0);
+	return float4(final_light, 1.0);
+
 }
