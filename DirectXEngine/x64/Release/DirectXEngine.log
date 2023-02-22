@@ -34,6 +34,6 @@ C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\Direct
 C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\DirectXEngine\Window.cpp(74,27): warning C4838: conversion from 'UINT' to 'LONG' requires a narrowing conversion
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 2682 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 2681 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   DirectXEngine.vcxproj -> C:\Users\Klein\Documents\GitHub\Eigenprojekte\GraphicsProgramming_Youtube\DirectXEngine\x64\Release\DirectXEngine.exe

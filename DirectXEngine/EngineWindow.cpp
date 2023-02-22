@@ -287,13 +287,13 @@ void EngineWindow::onKeyUp(int key)
 		m_play_state = (m_play_state) ? false : true;
 		InputSystem::Get()->ShowCursor(!m_play_state);
 	}
-	else if (key == 'F')
-	{
-		m_fullscreen_state = (m_fullscreen_state) ? false : true;
-		RECT size_screen = this->GetSizeScreen();
+	//else if (key == 'F')
+	//{
+	//	m_fullscreen_state = (m_fullscreen_state) ? false : true;
+	//	RECT size_screen = this->GetSizeScreen();
 
-		m_swap_chain->SetFullScreen(m_fullscreen_state, size_screen.right, size_screen.bottom);
-	}
+	//	m_swap_chain->SetFullScreen(m_fullscreen_state, size_screen.right, size_screen.bottom);
+	//}
 }
 
 void EngineWindow::onMouseMove(const Point & mouse_pos)
