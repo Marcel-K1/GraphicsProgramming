@@ -1,3 +1,14 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Vector3D
+* Date   : 05.01.2023
+* Author : Marcel Klein
+*
+* Data structure to be able to set up custom mathfunctions for vector calculations.
+*
+* Reference to: https://stackoverflow.com/
+*********************************************************************************************/
+
 #pragma once
 
 class Vector3D
@@ -40,7 +51,7 @@ public:
 	static Vector3D Normalize(const Vector3D& vec)
 	{
 		Vector3D res;
-		float len = sqrt((vec.m_x * vec.m_x) + (vec.m_y * vec.m_y) + (vec.m_z * vec.m_z));
+		float len = (float)sqrt((vec.m_x * vec.m_x) + (vec.m_y * vec.m_y) + (vec.m_z * vec.m_z));
 		if (!len)
 			return Vector3D();
 

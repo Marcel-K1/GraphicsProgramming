@@ -1,8 +1,21 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : VertexBuffer
+* Date   : 05.01.2023
+* Author : Marcel Klein
+*
+* Works as memory buffer, that contains a list of vertices (but with only one layout, 
+* following the semantic structure below).
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "VertexBuffer.h"
 #include "RenderSystem.h"
 #include <exception>
 
-//Memory Buffer, that contains a list of vertices(but with only one layout)
 VertexBuffer::VertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list,
 	void* shader_byte_code, size_t size_byte_shader,
 	RenderSystem* system) : m_system(system), m_layout(0), m_buffer(0)

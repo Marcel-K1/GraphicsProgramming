@@ -1,3 +1,14 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : GraphicsEngine
+* Date   : 02.01.2023
+* Author : Marcel Klein
+*
+* Manager for the graphic system of the application, subdivided into RenderSystem and ResourceManager to allow the Single Responsability Principle.
+* As Singleton to provide global access.
+*
+*********************************************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include "Prerequisites.h"
@@ -6,7 +17,6 @@
 #include "MeshManager.h"
 #include "Material.h"
 
-//As Singleton
 class GraphicsEngine
 {
 private:

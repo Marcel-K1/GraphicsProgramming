@@ -7,9 +7,6 @@
     <Filter Include="Application\Shaders">
       <UniqueIdentifier>{3388b871-ff16-4c2f-b450-6b09a195bb08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Shaders\GlobalShader">
-      <UniqueIdentifier>{b97f2976-7189-46a4-b405-4ffc0641b502}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Application\Shaders\PointLightRoughShader">
       <UniqueIdentifier>{581bcaed-d977-4f3d-ba0e-4d678208b673}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,9 @@
     </Filter>
     <Filter Include="GraphicsEngine\CustomMath">
       <UniqueIdentifier>{adeec22b-5b85-4bcf-b9d7-8d87789966c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Shaders\VertexMeshLayoutShader">
+      <UniqueIdentifier>{b97f2976-7189-46a4-b405-4ffc0641b502}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,7 +213,7 @@
       <Filter>GraphicsEngine\GraphicsEngine\Material</Filter>
     </ClInclude>
     <ClInclude Include="Prerequisites.h">
-      <Filter>GraphicsEngine\GraphicsEngine\ResourceManager</Filter>
+      <Filter>GraphicsEngine\GraphicsEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,7 +236,7 @@
       <Filter>Application\Shaders\PointLightRoughShader</Filter>
     </FxCompile>
     <FxCompile Include="VertexMeshLayoutShader.hlsl">
-      <Filter>Application\Shaders\GlobalShader</Filter>
+      <Filter>Application\Shaders\VertexMeshLayoutShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

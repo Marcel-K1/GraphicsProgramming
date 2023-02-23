@@ -1,3 +1,14 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Matrix4x4
+* Date   : 10.02.2023
+* Author : Marcel Klein
+*
+* Used to set the transform matrices for the constant buffer to use as world-, view- and projection-matrix.
+*
+* Reference to: https://stackoverflow.com/
+*********************************************************************************************/
+
 #pragma once
 #include <memory>
 #include "Vector3D.h"
@@ -10,9 +21,12 @@ public:
 	{
 	}
 
+	//Identity Matrix
 	void SetIdentity()
 	{
+		//Filling with zeros
 		::memset(m_mat, 0, sizeof(float) * 16);
+		//Filling with ones at right position in the two-dimensional array
 		m_mat[0][0] = 1;
 		m_mat[1][1] = 1;
 		m_mat[2][2] = 1;
@@ -21,18 +35,20 @@ public:
 
 	void SetTranslation(const Vector3D& translation)
 	{
+		//Translation is set in the last row of the array
 		m_mat[3][0] = translation.m_x;
 		m_mat[3][1] = translation.m_y;
 		m_mat[3][2] = translation.m_z;
 	}
 
-	void SetScale(const Vector4D& scale)
-	{
-		m_mat[0][0] = scale.m_x;
-		m_mat[1][1] = scale.m_y;
-		m_mat[2][2] = scale.m_z;
-		m_mat[3][3] = scale.m_w;
-	}
+	////Changing Scale of object (Optional)
+	//void SetScale(const Vector4D& scale)
+	//{
+	//	m_mat[0][0] = scale.m_x;
+	//	m_mat[1][1] = scale.m_y;
+	//	m_mat[2][2] = scale.m_z;
+	//	m_mat[3][3] = scale.m_w;
+	//}
 
 	void SetRotationX(float x)
 	{
@@ -99,10 +115,10 @@ public:
 			}
 			v.Cross(vec[0], vec[1], vec[2]);
 
-			out.m_mat[0][i] = pow(-1.0f, i) * v.m_x / det;
-			out.m_mat[1][i] = pow(-1.0f, i) * v.m_y / det;
-			out.m_mat[2][i] = pow(-1.0f, i) * v.m_z / det;
-			out.m_mat[3][i] = pow(-1.0f, i) * v.m_w / det;
+			out.m_mat[0][i] = (float)pow(-1.0f, i) * v.m_x / det;
+			out.m_mat[1][i] = (float)pow(-1.0f, i) * v.m_y / det;
+			out.m_mat[2][i] = (float)pow(-1.0f, i) * v.m_z / det;
+			out.m_mat[3][i] = (float)pow(-1.0f, i) * v.m_w / det;
 		}
 
 		this->SetMatrix(out);
@@ -142,6 +158,7 @@ public:
 		return Vector3D(m_mat[3][0], m_mat[3][1], m_mat[3][2]);
 	}
 
+	//Perspective Fiel Of View
 	void SetPerspectiveFovLH(float fov, float aspect, float znear, float zfar)
 	{
 		float yscale = 1.0f / tan(fov / 2.0f);
@@ -153,14 +170,15 @@ public:
 		m_mat[3][2] = (-znear * zfar) / (zfar - znear);
 	}
 
-	void SetOrthoLH(float width, float height, float near_plane, float far_plane)
-	{
-		SetIdentity();
-		m_mat[0][0] = 2.0f / width;
-		m_mat[1][1] = 2.0f / height;
-		m_mat[2][2] = 1.0f / (far_plane - near_plane);
-		m_mat[3][2] = -(near_plane / (far_plane - near_plane));
-	}
+	////Orthogonal Field Of View (optional)
+	//void SetOrthoLH(float width, float height, float near_plane, float far_plane)
+	//{
+	//	SetIdentity();
+	//	m_mat[0][0] = 2.0f / width;
+	//	m_mat[1][1] = 2.0f / height;
+	//	m_mat[2][2] = 1.0f / (far_plane - near_plane);
+	//	m_mat[3][2] = -(near_plane / (far_plane - near_plane));
+	//}
 
 	~Matrix4x4()
 	{

@@ -1,3 +1,17 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : ResourceManager
+* Date   : 11.02.2023
+* Author : Marcel Klein
+*
+* Handling the resource management by using the component design pattern by dividing the base
+* class Resource in more specialized classes like Texture and Mesh.
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "ResourceManager.h"
 
 #if __cplusplus <= 201402L 

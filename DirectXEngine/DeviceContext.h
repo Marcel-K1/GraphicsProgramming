@@ -1,3 +1,15 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : DeviceContext
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Extension of the DirectXDevice to generate rendering commands and
+* manage the render target(memory buffer on video ram, like the back buffer) and
+* setting up the render pipeline with the created resources by the render system(like shaders)
+*
+*********************************************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include "Prerequisites.h"

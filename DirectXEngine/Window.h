@@ -1,3 +1,15 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Window
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Base Class for classes to inherit from in order to make them listeners follwing the observer-pattern
+* like with the EngineWindow and be able to further develop the engine structure with more windows for
+* example. Also setting up the basic structure for window creation and broadcasting.
+*
+*********************************************************************************************/
+
 #pragma once
 #include <Windows.h>
 
@@ -12,7 +24,7 @@ public:
 	RECT GetClientWindowRect();
 	RECT GetSizeScreen();
 
-	//EVENTS
+	//Events
 	virtual void onCreate();
 	virtual void onUpdate();
 	virtual void onDestroy();

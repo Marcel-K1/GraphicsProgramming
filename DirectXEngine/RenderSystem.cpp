@@ -1,3 +1,17 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : RenderSystem
+* Date   : 15.02.2023
+* Author : Marcel Klein
+*
+* Initializes the GraphicsEngine and DirectX 11 Device/API. By using sharedPtr, 
+* we shorthen the code base and make them more accessible.
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "RenderSystem.h"
 #include "SwapChain.h"
 #include "DeviceContext.h"
@@ -10,7 +24,6 @@
 #include <d3dcompiler.h>
 #include <exception>
 
-//Initializes the GraphicsEngine and DirectX 11 Device/API, by using sharedPtr, we shorthen the code base and make them more accesible
 RenderSystem::RenderSystem()
 {
 	D3D_DRIVER_TYPE driver_types[] =

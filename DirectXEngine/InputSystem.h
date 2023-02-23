@@ -1,9 +1,21 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : InputSystem
+* Date   : 15.01.2023
+* Author : Marcel Klein
+*
+* Setting up and managing the inputs from the user with the methodes to be executed. Designed as Singleton
+* to be able to access it easier.
+*
+* Reference to: https://www.youtube.com/watch?v=zaJGn8pur5I&list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT&index=21
+*
+*********************************************************************************************/
+
 #pragma once
 #include "InputListener.h"
 #include <unordered_set>
 #include "Point.h"
 
-//As Singleton
 class InputSystem
 {
 private:

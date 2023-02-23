@@ -1,4 +1,17 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Mesh
+* Date   : 05.02.2023
+* Author : Marcel Klein
+*
+* Class for handling and computing all the vertices and indices data making up the mesh of the
+* objects we want to render.
+*
+* Reference to: https://github.com/tinyobjloader/tinyobjloader
+*********************************************************************************************/
+
 #pragma once
+#include "Prerequisites.h"
 #include "Resource.h"
 #include "VertexBuffer.h"
 #include "Vector3D.h"

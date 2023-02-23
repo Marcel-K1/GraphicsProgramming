@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : SwapChain
+* Date   : 10.01.2023
+* Author : Marcel Klein
+*
+* Used to show the render frames on screen, by double buffering with front and back buffer.
+*
+*********************************************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include "Prerequisites.h"
@@ -5,7 +15,7 @@
 class SwapChain
 {
 public:
-	//Initialize SwapChain for a window
+	//Initialize the SwapChain for a window.
 	SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system);
 
 	void SetFullScreen(bool fullscreen, unsigned int width, unsigned int height);
@@ -14,7 +24,6 @@ public:
 
 	bool Present(bool vsync);
 
-	//Release the swap chain
 	~SwapChain();
 
 private:

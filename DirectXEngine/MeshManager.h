@@ -1,4 +1,15 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : MeshManager
+* Date   : 05.02.2023
+* Author : Marcel Klein
+*
+* Class for managing file import for prebuild meshes.
+*
+*********************************************************************************************/
+
 #pragma once
+#include "Prerequisites.h"
 #include "ResourceManager.h"
 
 class MeshManager : public ResourceManager

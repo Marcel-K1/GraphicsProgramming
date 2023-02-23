@@ -1,8 +1,20 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : ResourceManager
+* Date   : 11.02.2023
+* Author : Marcel Klein
+*
+* Handling the resource management by using the component design pattern by dividing the base
+* class Resource in more specialized classes like Texture and Mesh.
+*
+*********************************************************************************************/
+
 #pragma once
-#include <unordered_map>
-#include <string>
 #include "Prerequisites.h"
 #include "Resource.h"
+
+#include <unordered_map>
+#include <string>
 
 class ResourceManager
 {

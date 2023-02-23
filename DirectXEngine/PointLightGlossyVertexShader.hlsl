@@ -1,9 +1,20 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : PointLightGlossyVertexShader
+* Date   : 15.02.2023
+* Author : Marcel Klein
+*
+* Shader for generating glossy-effect on material.
+*
+*********************************************************************************************/
+
 struct VS_INPUT
 {
 	float4 position: POSITION0;
 	float2 texcoord: TEXCOORD0;
 	float3 normal: NORMAL0;
 };
+
 
 struct VS_OUTPUT
 {
@@ -35,8 +46,10 @@ VS_OUTPUT main(VS_INPUT input)
 	//WORLD SPACE
 	output.position = mul(input.position, m_world);
 	output.world_pos = output.position.xyz;
+
 	//VIEW SPACE
 	output.position = mul(output.position, m_view);
+
 	//SCREEN SPACE
 	output.position = mul(output.position, m_proj);
 

@@ -1,3 +1,14 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : RenderSystem
+* Date   : 15.02.2023
+* Author : Marcel Klein
+*
+* Initializes the GraphicsEngine and DirectX 11 Device/API. By using sharedPtr,
+* we shorthen the code base and make them more accessible.
+*
+*********************************************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include "Prerequisites.h"
@@ -6,7 +17,7 @@ class RenderSystem
 {
 public:
 
-	//Initialize the GraphicsEngine and DirectX 11 Device
+	//Initialize the GraphicsEngine and DirectX 11 Device/API
 	RenderSystem();
 
 	//Release all the resources loaded
@@ -42,9 +53,6 @@ public:
 
 	void ReleaseCompiledShader();
 
-	////DEFAULT SIMPLE SHADERS
-	//bool CreateShaders();
-	//bool SetShaders();
 	void SetRasterizerState(bool cull_front);
 
 private:

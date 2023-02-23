@@ -1,9 +1,20 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Material
+* Date   : 18.02.2023
+* Author : Marcel Klein
+*
+* Consists of constant buffer, vertex and pixel shaders and a texture for the pixel shader to evaluate.
+*
+*********************************************************************************************/
+
 #pragma once
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "ConstantBuffer.h"
 #include <vector>
 
+//Handling for the material to show its front or back side polygons
 enum CULL_MODE
 {
 	CULL_MODE_FRONT = 0,

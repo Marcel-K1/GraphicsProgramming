@@ -1,9 +1,21 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : ConstantBuffer
+* Date   : 01.02.2023
+* Author : Marcel Klein
+*
+* Works as memory buffer, which allows to put in any data you want, and then pass it to any shader.
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "ConstantBuffer.h"
 #include "RenderSystem.h"
 #include "DeviceContext.h"
 #include <exception>
 
-//Memory Buffer, allows to put in any data you want, to then pass it to any shader
 ConstantBuffer::ConstantBuffer(void* buffer, UINT size_buffer, RenderSystem* system) : m_system(system)
 {
 	D3D11_BUFFER_DESC buff_desc = {};

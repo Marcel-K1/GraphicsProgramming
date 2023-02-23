@@ -1,3 +1,15 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Window
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Base Class for classes to inherit from in order to make them listeners follwing the observer-pattern
+* like with the EngineWindow and be able to further develop the engine structure with more windows for
+* example. Also setting up the basic structure for window creation and broadcasting.
+*
+*********************************************************************************************/
+
 #include "Window.h"
 #include <exception>
 
@@ -61,17 +73,17 @@ Window::Window(UINT width, UINT height)
 	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hInstance = NULL;
 	wc.lpszClassName = L"MyWindowClass",
-	wc.lpszMenuName = L"DirectX Engine",
+	wc.lpszMenuName = L"DirectX-Engine Marcel Klein",
 	wc.style = NULL;
 	wc.lpfnWndProc = &WndProc;
 
 	UINT screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	UINT screenHeight = GetSystemMetrics(SM_CYSCREEN);
 	RECT windowRect = {
-		(screenWidth - width) / 2,
-		(screenHeight - height) / 2,
-		(screenWidth + width) / 2,
-		(screenHeight + height) / 2
+		(LONG)(screenWidth - width) / 2,
+		(LONG)(screenHeight - height) / 2,
+		(LONG)(screenWidth + width) / 2,
+		(LONG)(screenHeight + height) / 2
 	};
 
 	AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, false);
@@ -84,7 +96,7 @@ Window::Window(UINT width, UINT height)
 	m_hwnd = ::CreateWindowEx(
 		WS_EX_OVERLAPPEDWINDOW,
 		L"MyWindowClass",
-		L"DirectX Engine",
+		L"DirectX-Engine Marcel Klein",
 		WS_OVERLAPPEDWINDOW,
 		windowRect.left, windowRect.top,
 		windowRect.right - windowRect.left, windowRect.bottom - windowRect.top,

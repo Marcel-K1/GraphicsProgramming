@@ -1,8 +1,20 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : SwapChain
+* Date   : 10.01.2023
+* Author : Marcel Klein
+*
+* Used to show the render frames on screen, by double buffering with front and back buffer.
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "SwapChain.h"
 #include "RenderSystem.h"
 #include <exception>
 
-//Used to show the render frames on screen, by double buffering with front and back buffer.
 SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) : m_system(system)
 {
 	ID3D11Device* device = m_system->m_d3d_device;
@@ -22,7 +34,7 @@ SwapChain::SwapChain(HWND hwnd, UINT width, UINT height, RenderSystem* system) :
 	desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	desc.Windowed = TRUE;
 
-	//Create the swap chain for the window indicated by HWND parameter
+	//Create the swap chain for the window indicated by HWND parameter.
 	HRESULT hr = m_system->m_dxgi_factory->CreateSwapChain(device, &desc, &m_swap_chain);
 
 	if (FAILED(hr))

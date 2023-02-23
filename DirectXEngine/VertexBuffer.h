@@ -1,3 +1,14 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : VertexBuffer
+* Date   : 05.01.2023
+* Author : Marcel Klein
+*
+* Works as memory buffer, that contains a list of vertices (but with only one layout,
+* following the semantic structure below).
+*
+*********************************************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include "Prerequisites.h"

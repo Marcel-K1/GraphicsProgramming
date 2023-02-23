@@ -1,9 +1,21 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Material
+* Date   : 18.02.2023
+* Author : Marcel Klein
+*
+* Consists of constant buffer, vertex and pixel shaders and a texture for the pixel shader to evaluate.
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "Material.h"
 #include "GraphicsEngine.h"
 #include <exception>
 #include <stdexcept>
 
-//Material consists of constant buffer, vertex and pixel shaders and a texture for the pixel shader to evaluate
 Material::Material(const wchar_t* vertex_shader_path, const wchar_t* pixel_shader_path)
 {
 	void* shader_byte_code = nullptr;

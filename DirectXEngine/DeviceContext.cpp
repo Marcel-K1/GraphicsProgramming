@@ -1,3 +1,18 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : DeviceContext
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Extension of the DirectXDevice to generate rendering commands and
+* manage the render target(memory buffer on video ram, like the back buffer) and
+* setting up the render pipeline with the created resources by the render system(like shaders)
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "DeviceContext.h"
 #include "SwapChain.h"
 #include "VertexBuffer.h"
@@ -8,9 +23,6 @@
 #include "Texture.h"
 #include <exception>
 
-//Extension of the DirectXDevice to generate rendering commands and 
-//manage the render target(memory buffer on video ram, like the back buffer) and
-//setting up the render pipeline with the created resources by the render system(like shaders)
 DeviceContext::DeviceContext(ID3D11DeviceContext* device_context, RenderSystem* system) : m_system(system), m_device_context(device_context)
 {
 }
@@ -100,6 +112,7 @@ void DeviceContext::SetTexture(const PixelShaderPtr& pixel_shader, const Texture
 	m_device_context->PSSetShaderResources(0, num_textures, list_res);
 	m_device_context->PSSetSamplers(0, num_textures, list_sampler);
 }
+
 
 //Rendering Command
 void DeviceContext::DrawIndexedTriangleList(UINT index_count, UINT start_vertex_index, UINT start_index_location)

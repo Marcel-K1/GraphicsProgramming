@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : EngineWindow
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Class for handling the engines window and overall draw and mesh commands.
+*
+*********************************************************************************************/
+
 #pragma once
 #include "Window.h"
 #include "GraphicsEngine.h"
@@ -95,8 +105,8 @@ private:
 
 private:
 	//Variables for time managment
-	long m_old_delta;
-	long m_new_delta;
+	ULONGLONG m_old_delta;
+	ULONGLONG m_new_delta;
 	float m_delta_time;
 
 	//Variables for input to change rotation

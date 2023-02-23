@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : PointLightRoughVertexShader
+* Date   : 20.02.2023
+* Author : Marcel Klein
+*
+* Shader for generating rough-effect on material.
+*
+*********************************************************************************************/
+
 struct VS_INPUT
 {
 	float4 position: POSITION0;
@@ -30,7 +40,6 @@ cbuffer constant: register(b0)
 };
 
 
-
 VS_OUTPUT main(VS_INPUT input)
 {
 	VS_OUTPUT output = (VS_OUTPUT)0;
@@ -38,14 +47,17 @@ VS_OUTPUT main(VS_INPUT input)
 	//WORLD SPACE
 	output.position = mul(input.position, m_world);
 	output.world_pos = output.position.xyz;
+
 	//VIEW SPACE
 	output.position = mul(output.position, m_view);
+
 	//SCREEN SPACE
 	output.position = mul(output.position, m_proj);
 
 	output.texcoord = input.texcoord;
 	output.normal = input.normal;
 
+	//BINORMAL & TANGENT SPACE
 	output.tbn[0] = normalize(mul(input.tangent, m_world));
 	output.tbn[1] = normalize(mul(input.binormal, m_world));
 	output.tbn[2] = normalize(mul(input.normal, m_world));

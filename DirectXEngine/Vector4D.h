@@ -1,3 +1,14 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Vector4D
+* Date   : 20.01.2023
+* Author : Marcel Klein
+*
+* Data structure to be able to set up custom mathfunctions for vector calculations.
+*
+* Reference to: https://stackoverflow.com/
+*********************************************************************************************/
+
 #pragma once
 #include "Vector3D.h"
 

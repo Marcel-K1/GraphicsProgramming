@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : main
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Class for setting up the applications main loop.
+*
+*********************************************************************************************/
+
 #include "EngineWindow.h"
 #include "InputSystem.h"
 

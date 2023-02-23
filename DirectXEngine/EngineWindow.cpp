@@ -1,3 +1,16 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : EngineWindow
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Class for handling the engines window and overall draw and mesh commands.
+*
+* * Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "EngineWindow.h"
 #include <Windows.h>
 #include "Vector3D.h"
@@ -47,7 +60,7 @@ void EngineWindow::Render()
 	//COMPUTE MATRICES
 	Update();
 
-	//Rendering more than one Object
+	//Rendering more than one object
 	for (int i = 0; i < 3; i++)
 	{
 		UpdateModel(Vector3D(4.0f, 2.0f, -4.0f + 4.0f * i), m_matte_mat);
@@ -59,10 +72,10 @@ void EngineWindow::Render()
 		UpdateModel(Vector3D(-4.0f, 2.0f, -4.0f + 4.0f * i), m_rough_mat);
 		DrawMesh(m_sphere_mesh, m_rough_mat);
 	}
-
-	//RENDER PLANE
+	//Render a plane 
 	UpdateModel(Vector3D(0, 0, 0), m_ground_mat);
 	DrawMesh(m_plane_mesh, m_ground_mat);
+
 
 	m_swap_chain->Present(true);
 

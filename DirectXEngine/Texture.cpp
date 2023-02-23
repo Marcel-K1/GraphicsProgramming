@@ -1,3 +1,15 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Texture
+* Date   : 05.02.2023
+* Author : Marcel Klein
+*
+* Class for handling and computing the texture data imported by file using the DirectXTex Library 
+* and setting up the resource view and sampler description.
+* 
+* Reference to: https://github.com/microsoft/DirectXTex
+*********************************************************************************************/
+
 #include "Texture.h"
 #include <DirectXTex.h>
 #include "GraphicsEngine.h"

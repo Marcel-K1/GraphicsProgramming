@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : TextureManager
+* Date   : 05.02.2023
+* Author : Marcel Klein
+*
+* Class for managing file import for textures using .jpg-format.
+*
+*********************************************************************************************/
+
 #include "TextureManager.h"
 #include "Texture.h"
 

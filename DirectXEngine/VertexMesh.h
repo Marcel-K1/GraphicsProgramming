@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : VertexMesh
+* Date   : 23.01.2023
+* Author : Marcel Klein
+*
+* Data structure that handles data produce by the mesh.cpp in order to create the vertex buffer.
+*
+*********************************************************************************************/
+
 #pragma once
 #include "Vector3D.h"
 #include "Vector2D.h"

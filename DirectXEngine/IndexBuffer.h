@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : IndexBuffer
+* Date   : 20.01.2023
+* Author : Marcel Klein
+*
+* Memory Buffer, that contains a list of indices, for the mesh to be build correctly using DrawINDEXEDTriangleList.
+*
+*********************************************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include "Prerequisites.h"

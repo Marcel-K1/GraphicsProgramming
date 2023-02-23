@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : ConstantBuffer
+* Date   : 01.02.2023
+* Author : Marcel Klein
+*
+* Works as memory buffer, which allows to put in any data you want, and then pass it to any shader.
+*
+*********************************************************************************************/
+
 #pragma once
 #include <d3d11.h>
 #include "Prerequisites.h"

@@ -1,3 +1,16 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : PointLightMattePixelShader
+* Date   : 10.02.2023
+* Author : Marcel Klein
+*
+* Shader for generating matte-effect on material using the phong light model with a world-
+* position input to be able to use a point light.
+*
+* Reference to: https://stackoverflow.com/questions/34527505/blinn-phong-shading-with-hlsl-and-d3d11-point-light
+* https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_reflection_model
+*********************************************************************************************/
+
 Texture2D TextureColor: register(t0);
 sampler TextureColorSampler: register(s0);
 

@@ -1,3 +1,17 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : GraphicsEngine
+* Date   : 02.01.2023
+* Author : Marcel Klein
+*
+* Manager for the graphic system of the application, subdivided into RenderSystem and ResourceManager to allow the Single Responsability Principle.
+* As Singleton to provide global access.
+*
+* Reference to: https://www.youtube.com/watch?v=luuyjjOxnUI&list=PL7Ej6SUky135IAAR3PFCFyiVwanauRqj3
+* https://www.youtube.com/watch?v=hRL56gXqj-4&list=PLU2nPsAdxKWQYxkmQ3TdbLsyc1l2j25XM
+* https://www.youtube.com/watch?v=gQIG77PfLgo&list=PLcacUGyBsOIBlGyQQWzp6D1Xn6ZENx9Y2
+*********************************************************************************************/
+
 #include "GraphicsEngine.h"
 #include "RenderSystem.h"
 #include "DeviceContext.h"
@@ -5,8 +19,6 @@
 
 GraphicsEngine* GraphicsEngine::m_engine = nullptr;
 
-//Manager for the graphic system of the application, subdivided into RenderSystem and ResourceManager to allow the Single Responsability Principle.
-//As Singleton to provide global access.
 GraphicsEngine::GraphicsEngine()
 {
 	try

@@ -1,3 +1,14 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Vector2D
+* Date   : 01.01.2023
+* Author : Marcel Klein
+*
+* Data structure to be able to set up custom mathfunctions for vector calculations.
+*
+* Reference to: https://stackoverflow.com/
+*********************************************************************************************/
+
 #pragma once
 
 class Vector2D

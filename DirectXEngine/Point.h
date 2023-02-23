@@ -1,3 +1,13 @@
+/*********************************************************************************************
+* Project: DirectXEngine
+* File   : Point
+* Date   : 10.02.2023
+* Author : Marcel Klein
+*
+* Data structure for handling the mouse position in the input system
+*
+*********************************************************************************************/
+
 #pragma once
 
 class Point
@@ -22,6 +32,5 @@ public:
 public:
 	int m_x = 0;
 	int	m_y = 0;
-
 };
 
